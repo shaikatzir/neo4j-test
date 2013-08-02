@@ -41,11 +41,8 @@ app.get('/users/:id', routes.users.show);
 app.post('/users/:id', routes.users.edit);
 app.del('/users/:id', routes.users.del);
 
-app.post('/users/:id/follow', routes.users.follow);
-app.post('/users/:id/unfollow', routes.users.unfollow);
-
-app.post('/users/:id/additem', routes.users.additem);
-app.post('/users/:id/rmitem', routes.users.rmitem);
+//app.post('/users/:id/follow', routes.users.follow);
+//app.post('/users/:id/unfollow', routes.users.unfollow);
 
 //items
 app.get('/items', routes.items.list);

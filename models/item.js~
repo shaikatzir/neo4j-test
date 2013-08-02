@@ -1,9 +1,8 @@
-// user.js
+// item.js
 // User model logic.
 
-var dbconn = require('../routes/dbconn');
-var neo4j = dbconn.neo4j;
-var db = dbconn.db;
+var neo4j = require('neo4j');
+var db = new neo4j.GraphDatabase(process.env.NEO4J_URL || 'http://localhost:7474');
 var dbApi = require('./DBApi');
 
 // constants:
@@ -11,10 +10,8 @@ var dbApi = require('./DBApi');
 var INDEX_NAME = 'node_auto_index';
 var INDEX_KEY = 'type';
 var INDEX_VAL = 'user';
-var INDEX_ITEM_VAL = 'item';
 
 var FRIEND_REL = 'FRIEND';
-var ITEM_REL = 'HAS_ITEM';
 
 // private constructor:
 
@@ -95,27 +92,11 @@ User.prototype.unfriend = function (other, callback) {
     });
 };
 
-User.prototype.additem = function (other, callback) {
-    this._node.createRelationshipTo(other._node, 'HAS_ITEM', {}, function (err, rel) {
-        callback(err);
-    });
-};
-
-User.prototype.rmitem = function (other, callback) {
-    this._getFriendRel(other, function (err, rel) {
-        if (err) return callback(err);
-        if (!rel) return callback(null);
-        rel.del(function (err) {
-            callback(err);
-        });
-    });
-};
-
 // calls callback w/ (err, friends, others) where friends is an array of
 // users friend of this user, and others is all other users minus him/herself.
-User.prototype.getUserSN = function (callback) {
+User.prototype.getFriendsAndOthers = function (callback) {
     // query all users and whether are friends or not:
-    var query_friends = [
+    var query = [
         'START user=node({userId}), other=node:INDEX_NAME(INDEX_KEY="INDEX_VAL")',
         'MATCH (user) -[rel?:FRIEND_REL]-> (other)',
         'RETURN other, COUNT(rel)'  // COUNT(rel) is a hack for 1 or 0
@@ -125,22 +106,12 @@ User.prototype.getUserSN = function (callback) {
         .replace('INDEX_VAL', INDEX_VAL)
         .replace('FRIEND_REL', FRIEND_REL);
 
-    var query_items = [
-        'START user=node({userId}), other=node:INDEX_NAME(INDEX_KEY="INDEX_ITEM_VAL")',
-	'MATCH (user) -[rel?:ITEM_REL]-> (other)',
-        'RETURN other, COUNT(rel)'  // COUNT(rel) is a hack for 1 or 0
-    ].join('\n')
-        .replace('INDEX_NAME', INDEX_NAME)
-        .replace('INDEX_KEY', INDEX_KEY)
-        .replace('INDEX_ITEM_VAL', INDEX_ITEM_VAL)
-        .replace('ITEM_REL', ITEM_REL);
-
     var params = {
         userId: this.id,
     };
 
     var user = this;
-    db.query(query_friends, params, function (err, results) {
+    db.query(query, params, function (err, results) {
         if (err) return callback(err);
 
         var friends = [];
@@ -158,24 +129,8 @@ User.prototype.getUserSN = function (callback) {
                 others.push(other);
             }
         }
-	db.query(query_items, params, function (err, results) {
-	        if (err) return callback(err);
 
-	        var items = [];
-	        var other_items = [];
-        	for (var i = 0; i < results.length; i++) {
-	            var other = new User(results[i]['other']);
-	            var hasItem = results[i]['COUNT(rel)'];
-	
-	            if (hasItem) {
-	                items.push(other);
-	            } else {
-	                other_items.push(other);
-	            }
-        	}
-
-	        callback(null, friends, others, items, other_items);
-	});
+        callback(null, friends, others);
     });
 };
 
@@ -190,8 +145,8 @@ User.getAll = function (callback) {
 	dbApi.getAllObj('./user',INDEX_NAME, INDEX_KEY, INDEX_VAL,callback);
 };
 
-// creates the user and persists (saves) it to the db
+// creates the user and persists (saves) it to the db, incl. indexing it:
 User.create = function (data, callback) {
-        data.type = 'user';
+        data.type = 'user'
 	dbApi.create('./user',data,callback);
 };

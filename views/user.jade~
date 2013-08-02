@@ -31,35 +31,6 @@ block content
     else
         p There's no one else left for #{user.name} to follow!
 
-
-    //ITEMS
-    if items.length
-        p #{user.name} has #{items.length} items:
-        // TODO should say 'user' if only one! ;)
-        ul.items
-            for other in items
-                li.item
-                    form(action='/users/#{user.id}/rmitem', method='POST')
-                        a(href='/items/#{other.id}') #{other.name}
-                        input(type='hidden', name='item[id]', value='#{other.id}')
-                        input(type='submit', class='rmitem', value='x')
-    else
-        p #{user.name} has no items.
-
-    if other_items.length
-        form(action='/users/#{user.id}/additem', method='POST')
-            p Add an item for #{user.name}:
-            label
-                select(name='item[id]', required)
-                    option(value='')
-                    for item in other_items
-                        option(value='#{item.id}') #{item.name}
-            input(type='submit', value='Add Item')
-    else
-        p There's no other items left!
-
-
-
     form(action='/users/#{user.id}', method='POST')
         p Edit this user:
         input(type='text', name='name', placeholder='#{user.name}', required)

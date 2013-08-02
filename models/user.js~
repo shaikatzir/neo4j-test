@@ -126,8 +126,8 @@ User.prototype.getUserSN = function (callback) {
         .replace('FRIEND_REL', FRIEND_REL);
 
     var query_items = [
-        'START user=node({userId}), other=node:INDEX_NAME(INDEX_KEY="INDEX_ITEM_VAL")',
-	'MATCH (user) -[rel?:ITEM_REL]-> (other)',
+        'START user=node({userId}), item=node:INDEX_NAME(INDEX_KEY="INDEX_ITEM_VAL")',
+	'MATCH (user) -[rel?:ITEM_REL]-> (item)',
         'RETURN other, COUNT(rel)'  // COUNT(rel) is a hack for 1 or 0
     ].join('\n')
         .replace('INDEX_NAME', INDEX_NAME)

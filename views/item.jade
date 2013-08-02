@@ -1,0 +1,19 @@
+extends layout
+
+block content
+    h1 #{item.name}
+
+    p
+        a(href='/items') Back to everyone
+
+        p #{item.name} isn't following anyone currently.
+
+    form(action='/items/#{item.id}', method='POST')
+        p Edit this item:
+        input(type='text', name='name', placeholder='#{item.name}', required)
+        input(type='submit', value='Update')
+
+    form(action='/items/#{item.id}', method='POST', onsubmit='return confirm("Are you sure?");')
+        p And if you're feeling destructive…
+        input(type='hidden', name='_method', value='DELETE')
+        input(type='submit', value='Delete item')
