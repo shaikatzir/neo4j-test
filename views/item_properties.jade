@@ -1,0 +1,18 @@
+extends layout
+
+block content
+    h1 Item Properties
+
+    if item_properties.length
+        p Here are the current item properties:
+        ul.item_properties
+            for pr in item_properties
+                li.item_properties
+                    a(href='/item_properties/#{pr.id}') #{pr.name}
+    else
+        p There are no item properties currently.
+
+    form(action='', method='POST')
+        p Create a new  item property:
+        input(type='text', name='name', placeholder='Name', required)
+        input(type='submit', value='Create')

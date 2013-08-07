@@ -1,42 +1,46 @@
 extends layout
 
 block content
-    h1 #{user.name}
+    h1 #{item.name}
 
     p
-        a(href='/users') Back to everyone
+        a(href='/items') Back to everyone
 
-    if following.length
-        p #{user.name} is following #{following.length} users:
+        p #{item.name} isn't following anyone currently.
+
+    //ITEM Properties
+    if properties.length
+        p #{item.name} has #{properties.length} properties:
         // TODO should say 'user' if only one! ;)
-        ul.users
-            for other in following
-                li.user
-                    form(action='/users/#{user.id}/unfollow', method='POST')
-                        a(href='/users/#{other.id}') #{other.name}
-                        input(type='hidden', name='user[id]', value='#{other.id}')
-                        input(type='submit', class='unfollow', value='x')
+        ul.properties
+            for other in properties
+                li.property
+                    form(action='/items/#{item.id}/rmproperty', method='POST')
+                        a(href='/item_properties/#{other.id}') #{other.name}
+                        input(type='hidden', name='property[id]', value='#{other.id}')
+                        input(type='submit', class='rmproperty', value='x')
     else
-        p #{user.name} isn't following anyone currently.
+        p #{item.name} has no properties.
 
-    if others.length
-        form(action='/users/#{user.id}/follow', method='POST')
-            p Add someone for #{user.name} to follow:
+    if other_prs.length
+        form(action='/items/#{item.id}/addproperty', method='POST')
+            p Add a property for #{item.name}:
             label
-                select(name='user[id]', required)
+                select(name='property[id]', required)
                     option(value='')
-                    for user in others
-                        option(value='#{user.id}') #{user.name}
-            input(type='submit', value='Follow')
+                    for other in other_prs
+                        option(value='#{other.id}') #{other.name}
+            input(type='submit', value='Add Property')
     else
-        p There's no one else left for #{user.name} to follow!
+        p There's no other properties left!
 
-    form(action='/users/#{user.id}', method='POST')
-        p Edit this user:
-        input(type='text', name='name', placeholder='#{user.name}', required)
+
+    form(action='/items/#{item.id}', method='POST')
+        p Edit this item:
+        input(type='text', name='name', placeholder='#{item.name}', required)
         input(type='submit', value='Update')
 
-    form(action='/users/#{user.id}', method='POST', onsubmit='return confirm("Are you sure?");')
+    form(action='/items/#{item.id}', method='POST', onsubmit='return confirm("Are you sure?");')
         p And if you're feeling destructive…
         input(type='hidden', name='_method', value='DELETE')
-        input(type='submit', value='Delete User')
+        input(type='submit', value='Delete item')

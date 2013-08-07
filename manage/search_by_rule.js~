@@ -1,0 +1,8 @@
+
+
+//EXAMPLE search is its cold now
+//START se = node:node_auto_index(name="Cold"), item =node:node_auto_index(type="item")
+//MATCH (se) - [:RULE] -> () <- [] - (item)
+//return item, item.name
+
+

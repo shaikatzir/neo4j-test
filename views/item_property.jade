@@ -1,0 +1,19 @@
+extends layout
+
+block content
+    h1 #{property.name}
+
+    p
+        a(href='/item_properties') Back to everyone
+
+        p #{property.name} isn't following anyone currently.
+
+    form(action='/item_properties/#{property.id}', method='POST')
+        p Edit this property:
+        input(type='text', name='name', placeholder='#{property.name}', required)
+        input(type='submit', value='Update')
+
+    form(action='/item_properies/#{property.id}', method='POST', onsubmit='return confirm("Are you sure?");')
+        p And if you're feeling destructive…
+        input(type='hidden', name='_method', value='DELETE')
+        input(type='submit', value='Delete property')

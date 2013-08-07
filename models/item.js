@@ -3,15 +3,18 @@
 
 var dbconn = require('../routes/dbconn');
 var neo4j = dbconn.neo4j;
-var db = dbconn.sb;
+var db = dbconn.db;
 var dbApi = require('./DBApi');
 
+var Property = require('./item_property');
 // constants:
 
 var INDEX_NAME = 'node_auto_index';
 var INDEX_KEY = 'type';
 var INDEX_VAL = 'item';
+var INDEX_PROPERTY_VAL = 'item_property';
 
+var PROPERTY_REL = 'PROPERTY'; //for now we give every one the same rel
 
 // private constructor:
 
@@ -41,6 +44,24 @@ Object.defineProperty(Item.prototype, 'name', {
 });
 
 // private instance methods:
+Item.prototype._getPropertyRel = function (other, callback) {
+    var query = [
+        'START user=node({itemId}), other=node({otherId})',
+        'MATCH (user) -[rel:]-> (other)',
+        'RETURN rel'
+    ].join('\n')
+
+    var params = {
+        itemId: this.id,
+        otherId: other.id,
+    };
+
+    db.query(query, params, function (err, results) {
+        if (err) return callback(err);
+        var rel = results[0] && results[0]['rel'];
+        callback(null, rel);
+    });
+};
 
 // public instance methods:
 
@@ -56,6 +77,55 @@ Item.prototype.del = function (callback) {
     }, true);   // true = yes, force it (delete all relationships)
 };
 
+Item.prototype.addProperty = function (other, callback) {
+    this._node.createRelationshipTo(other._node, PROPERTY_REL, {}, function (err, rel) {
+        callback(err);
+    });
+};
+
+Item.prototype.rmProperty = function (other, callback) {
+    this._getPropertyRel(other, function (err, rel) {
+        if (err) return callback(err);
+        if (!rel) return callback(null);
+        rel.del(function (err) {
+            callback(err);
+        });
+    });
+};
+
+Item.prototype.getItemProperties = function (callback) {
+   // query all items and whether have connection or not:
+    var query = [
+        'START item=node({itemId}), other=node:INDEX_NAME(INDEX_KEY="INDEX_PROPERTY_VAL")',
+        'MATCH (item) -[rel?]-> (other)',
+        'RETURN other, COUNT(rel)'  // COUNT(rel) is a hack for 1 or 0
+    ].join('\n')
+        .replace('INDEX_NAME', INDEX_NAME)
+        .replace('INDEX_KEY', INDEX_KEY)
+        .replace('INDEX_PROPERTY_VAL', INDEX_PROPERTY_VAL)
+ 
+    var params = {
+        itemId: this.id,
+    };
+
+    var item = this;
+    db.query(query, params, function (err, results) {
+        if (err) return callback(err);
+        var properties = [];
+        var others = [];
+        for (var i = 0; i < results.length; i++) {
+            var other = new Property(results[i]['other']);
+            var isProperty = results[i]['COUNT(rel)'];
+
+	    if (isProperty) {
+                properties.push(other);
+            } else {
+                others.push(other);
+            }
+       } 
+       callback(null, properties, others);
+    });
+};
 
 // static methods:
 

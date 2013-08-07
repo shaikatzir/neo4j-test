@@ -2,6 +2,7 @@
 // Routes to CRUD users.
 
 var User = require('../models/user');
+var Item = require('../models/item');
 
 /**
  * GET /users
@@ -108,8 +109,8 @@ exports.unfollow = function (req, res, next) {
 /**
  * POST /users/:id/additem
  */
-//req : req.params.id : item id to be added
-//	req.body.user.id : current user
+//req : req.params.id : current user
+//	req.body.item.id : item id to be added
 exports.additem = function (req, res, next) {
     User.get(req.params.id, function (err, user) {
         if (err) return next(err);
@@ -126,15 +127,20 @@ exports.additem = function (req, res, next) {
 /**
  * POST /users/:id/rmitem
  */
+//req : req.params.id : current user
+//	req.body.item.id : item id to be added
 exports.rmitem = function (req, res, next) {
     User.get(req.params.id, function (err, user) {
         if (err) return next(err);
-        User.get(req.body.user.id, function (err, other) {
+        console.log("got user "+req.params.id);
+        Item.get(req.body.item.id, function (err, other) {
             if (err) return next(err);
-            user.unfollow(other, function (err) {
+	    console.log("got item "+req.body.item.id);
+            user.rmItem(other, function (err) {
                 if (err) return next(err);
                 res.redirect('/users/' + user.id);
             });
         });
     });
 };
+

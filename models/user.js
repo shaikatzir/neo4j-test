@@ -65,6 +65,27 @@ User.prototype._getFriendRel = function (other, callback) {
     });
 };
 
+User.prototype._getItemRel = function (other, callback) {
+    var query = [
+        'START user=node({userId}), other=node({otherId})',
+        'MATCH (user) -[rel?:ITEM_REL]-> (other)',
+        'RETURN rel'
+    ].join('\n')
+        .replace('ITEM_REL', ITEM_REL);
+
+    var params = {
+        userId: this.id,
+        otherId: other.id,
+    };
+
+    db.query(query, params, function (err, results) {
+        if (err) return callback(err);
+        var rel = results[0] && results[0]['rel'];
+        callback(null, rel);
+    });
+};
+
+
 // public instance methods:
 
 User.prototype.save = function (callback) {
@@ -80,7 +101,7 @@ User.prototype.del = function (callback) {
 };
 
 User.prototype.friend = function (other, callback) {
-    this._node.createRelationshipTo(other._node, 'FRIEND', {}, function (err, rel) {
+    this._node.createRelationshipTo(other._node, FRIEND_REL, {}, function (err, rel) {
         callback(err);
     });
 };
@@ -95,14 +116,14 @@ User.prototype.unfriend = function (other, callback) {
     });
 };
 
-User.prototype.additem = function (other, callback) {
-    this._node.createRelationshipTo(other._node, 'HAS_ITEM', {}, function (err, rel) {
+User.prototype.addItem = function (other, callback) {
+    this._node.createRelationshipTo(other._node, ITEM_REL, {}, function (err, rel) {
         callback(err);
     });
 };
 
-User.prototype.rmitem = function (other, callback) {
-    this._getFriendRel(other, function (err, rel) {
+User.prototype.rmItem = function (other, callback) {
+    this._getItemRel(other, function (err, rel) {
         if (err) return callback(err);
         if (!rel) return callback(null);
         rel.del(function (err) {
@@ -114,7 +135,7 @@ User.prototype.rmitem = function (other, callback) {
 // calls callback w/ (err, friends, others) where friends is an array of
 // users friend of this user, and others is all other users minus him/herself.
 User.prototype.getUserSN = function (callback) {
-    // query all users and whether are friends or not:
+   // query all users and whether are friends or not:
     var query_friends = [
         'START user=node({userId}), other=node:INDEX_NAME(INDEX_KEY="INDEX_VAL")',
         'MATCH (user) -[rel?:FRIEND_REL]-> (other)',
@@ -142,7 +163,6 @@ User.prototype.getUserSN = function (callback) {
     var user = this;
     db.query(query_friends, params, function (err, results) {
         if (err) return callback(err);
-
         var friends = [];
         var others = [];
 

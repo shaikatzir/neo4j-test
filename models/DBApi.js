@@ -1,9 +1,9 @@
 // DBApi.js
 // exports DB simple API
 
-var neo4j = require('neo4j');
-var db = new neo4j.GraphDatabase(process.env.NEO4J_URL || 'http://localhost:7474');
-
+var dbconn = require('../routes/dbconn');
+var neo4j = dbconn.neo4j;
+var db = dbconn.db;
 
 
 exports.getObj = function (type, id, callback) {

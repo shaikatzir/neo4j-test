@@ -2,8 +2,8 @@
 // exports DB simple API
 
 var neo4j = require('neo4j');
-var db = new neo4j.GraphDatabase(process.env.NEO4J_URL || 'http://localhost:7474');
-
+//var db = new neo4j.GraphDatabase(process.env.NEO4J_URL || 'http://localhost:7474');
+var db = new neo4j.GraphDatabase('http://ec2-50-19-150-210.compute-1.amazonaws.com:7474');
 
 
 exports.getObj = function (type, id, callback) {
@@ -31,7 +31,6 @@ exports.getAllObj = function (type, in_name, in_key, in_val, callback) {
 // creates the object and persists (saves) it to the db:
 exports.create = function (type, data, callback) {
     var objType = require(type);
-    data.type = type;
     var node = db.createNode(data);
     var obj = new objType(node);
     node.save(function (err) {

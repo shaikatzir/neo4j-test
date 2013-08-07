@@ -2,6 +2,7 @@
 // Routes to CRUD items.
 
 var item = require('../models/item');
+var Property = require('../models/item_property');
 
 /**
  * GET /items
@@ -33,9 +34,14 @@ exports.create = function (req, res, next) {
 exports.show = function (req, res, next) {
     item.get(req.params.id, function (err, item) {
         if (err) return next(err);
-        res.render('item', {
-		item : item	
-	});       
+	item.getItemProperties(function (err, properties, other_prs) {
+            if (err) return next(err);
+            res.render('item', {
+                item: item,
+                properties: properties,
+                other_prs : other_prs
+            });
+        });
     });
 };
 
@@ -66,4 +72,40 @@ exports.del = function (req, res, next) {
     });
 };
 
+/**
+ * POST /items/:id/addproperty
+ */
+//req : req.params.id : current item
+//	req.body.property.id : property id to be added
+exports.addproperty = function (req, res, next) {
+    item.get(req.params.id, function (err, item) {
+        if (err) return next(err);
+        Property.get(req.body.property.id, function (err, other) {
+            if (err) return next(err);
+            item.addProperty(other, function (err) {
+                if (err) return next(err);
+                res.redirect('/items/' + item.id);
+            });
+        });
+    });
+};
+
+
+/**
+ * POST /items/:id/rmproperty
+ */
+//req : req.params.id : current item
+//	req.body.property.id : property id to be added
+exports.rmproperty = function (req, res, next) {
+    item.get(req.params.id, function (err, item) {
+        if (err) return next(err);
+        Property.get(req.body.property.id, function (err, other) {
+            if (err) return next(err);
+            item.rmProperty(other, function (err) {
+                if (err) return next(err);
+                res.redirect('/items/' + item.id);
+            });
+        });
+    });
+};
 

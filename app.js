@@ -54,6 +54,16 @@ app.get('/items/:id', routes.items.show);
 app.post('/items/:id', routes.items.edit);
 app.del('/items/:id', routes.items.del);
 
+app.post('/items/:id/addproperty', routes.items.addproperty);
+app.post('/items/:id/rmproperty', routes.items.rmproperty);
+
+//item properties
+app.get('/item_properties', routes.item_properties.list);
+app.post('/item_properties', routes.item_properties.create);
+app.get('/item_properties/:id', routes.item_properties.show);
+app.post('/item_properties/:id', routes.item_properties.edit);
+app.del('/item_properties/:id', routes.item_properties.del);
+
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
 });

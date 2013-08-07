@@ -41,8 +41,11 @@ app.get('/users/:id', routes.users.show);
 app.post('/users/:id', routes.users.edit);
 app.del('/users/:id', routes.users.del);
 
-//app.post('/users/:id/follow', routes.users.follow);
-//app.post('/users/:id/unfollow', routes.users.unfollow);
+app.post('/users/:id/follow', routes.users.follow);
+app.post('/users/:id/unfollow', routes.users.unfollow);
+
+app.post('/users/:id/additem', routes.users.additem);
+app.post('/users/:id/rmitem', routes.users.rmitem);
 
 //items
 app.get('/items', routes.items.list);
@@ -50,6 +53,16 @@ app.post('/items', routes.items.create);
 app.get('/items/:id', routes.items.show);
 app.post('/items/:id', routes.items.edit);
 app.del('/items/:id', routes.items.del);
+
+app.post('/users/:id/addproperty', routes.items.addproperty);
+app.post('/users/:id/rmproperty', routes.items.rmproperty);
+
+//item properties
+app.get('/item_properties', routes.item_properties.list);
+app.post('/item_properties', routes.item_properties.create);
+app.get('/item_properties/:id', routes.item_properties.show);
+app.post('/item_properties/:id', routes.item_properties.edit);
+app.del('/item_properties/:id', routes.item_properties.del);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
