@@ -21,7 +21,7 @@ exports.getAllObj = function (type, in_name, in_key, in_val, callback) {
         // XXX FIXME the index might not exist in the beginning, so special-case
         // this error detection. warning: this is super brittle!!
         if (err) return callback(null, []);
-	var objs = nodes.map(function (node) {
+		var objs = nodes.map(function (node) {
             return new objType(node);
         });
         callback(null, objs);
@@ -35,11 +35,23 @@ exports.create = function (type, data, callback) {
     var obj = new objType(node);
     node.save(function (err) {
         if (err) return callback(err);
-	console.log('Node saved to database with id:', node.id);
-	callback(null,obj);
+		console.log('Node saved to database with id:', node.id);
+		callback(null,obj);
 //        node.index(INDEX_NAME, INDEX_KEY, INDEX_VAL, function (err) {
 //            if (err) return callback(err);
 //            callback(null, user);
 //        });
     });
 };
+
+exports.getObjByIndex = function (type, in_name, in_key, in_val, callback) {
+    var objType = require(type);
+    db.getIndexedNode(in_name, in_key, in_val, function (err, node) {
+        if (err) return callback(err);
+        if (node)
+	        callback(null, new objType(node));
+	    else
+	    	callback(null);
+    });
+};
+

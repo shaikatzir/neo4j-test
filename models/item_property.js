@@ -72,3 +72,8 @@ ItemProperty.create = function (data, callback) {
         data.type = 'item_property';
 	dbApi.create('./item_property',data,callback);
 };
+
+ItemProperty.getByName = function (name, callback) {
+	dbApi.getObjByIndex('./item_property',INDEX_NAME, 'name', name,callback);
+};
+
