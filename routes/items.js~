@@ -79,13 +79,10 @@ exports.del = function (req, res, next) {
 //	req.body.property.id : property id to be added
 exports.addproperty = function (req, res, next) {
     item.get(req.params.id, function (err, item) {
-	console.log("got item " + item.id);
         if (err) return next(err);
         Property.get(req.body.property.id, function (err, other) {
-	    console.log("got PROPERTY " + other.id);
             if (err) return next(err);
             item.addProperty(other, function (err) {
-		console.log("added property ");
                 if (err) return next(err);
                 res.redirect('/items/' + item.id);
             });

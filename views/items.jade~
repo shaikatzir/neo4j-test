@@ -1,18 +1,19 @@
 extends layout
 
 block content
-    h1 Users
-
-    if users.length
-        p Here are the current users:
-        ul.users
-            for user in users
-                li.user
-                    a(href='/users/#{user.id}') #{user.name}
+    h1 Items
+	p
+        a(href='./') Back to homepage
+    if items.length
+        p Here are the current items:
+        ul.items
+            for item in items
+                li.item
+                    a(href='/items/#{item.id}') #{item.name}
     else
-        p There are no users currently.
+        p There are no items currently.
 
     form(action='', method='POST')
-        p Create a new user:
+        p Create a new item:
         input(type='text', name='name', placeholder='Name', required)
         input(type='submit', value='Create')

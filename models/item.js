@@ -47,7 +47,7 @@ Object.defineProperty(Item.prototype, 'name', {
 Item.prototype._getPropertyRel = function (other, callback) {
     var query = [
         'START user=node({itemId}), other=node({otherId})',
-        'MATCH (user) -[rel:]-> (other)',
+        'MATCH (user) -[rel]-> (other)',
         'RETURN rel'
     ].join('\n')
 
@@ -98,7 +98,8 @@ Item.prototype.getItemProperties = function (callback) {
     var query = [
         'START item=node({itemId}), other=node:INDEX_NAME(INDEX_KEY="INDEX_PROPERTY_VAL")',
         'MATCH (item) -[rel?]-> (other)',
-        'RETURN other, COUNT(rel)'  // COUNT(rel) is a hack for 1 or 0
+        'RETURN other, COUNT(rel) ',  // COUNT(rel) is a hack for 1 or 0
+        'ORDER BY other.name'
     ].join('\n')
         .replace('INDEX_NAME', INDEX_NAME)
         .replace('INDEX_KEY', INDEX_KEY)

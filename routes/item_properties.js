@@ -21,10 +21,10 @@ exports.list = function (req, res, next) {
 exports.create = function (req, res, next) {
     property.create({
         name: req.body['name']
-    }, function (err, property) {
+    }, function (err, Property) {
         if (err) return next(err);
-        res.redirect('/item_properites/' + property.id);
-    });
+        res.redirect('/item_properites/' + Property.id);
+     });
 };
 
 /**

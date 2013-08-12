@@ -78,13 +78,13 @@ exports.del = function (req, res, next) {
 //req : req.params.id : current item
 //	req.body.property.id : property id to be added
 exports.addproperty = function (req, res, next) {
-    item.get(req.params.id, function (err, item) {
+    item.get(req.params.id, function (err, itemOb) {
         if (err) return next(err);
         Property.get(req.body.property.id, function (err, other) {
             if (err) return next(err);
-            item.addProperty(other, function (err) {
+            itemOb.addProperty(other, function (err) {
                 if (err) return next(err);
-                res.redirect('/items/' + item.id);
+                res.redirect('/items/' + itemOb.id);
             });
         });
     });

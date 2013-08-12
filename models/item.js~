@@ -47,7 +47,7 @@ Object.defineProperty(Item.prototype, 'name', {
 Item.prototype._getPropertyRel = function (other, callback) {
     var query = [
         'START user=node({itemId}), other=node({otherId})',
-        'MATCH (user) -[rel:]-> (other)',
+        'MATCH (user) -[rel]-> (other)',
         'RETURN rel'
     ].join('\n')
 
@@ -113,7 +113,6 @@ Item.prototype.getItemProperties = function (callback) {
         if (err) return callback(err);
         var properties = [];
         var others = [];
-	console.log('length '+ results.length);
         for (var i = 0; i < results.length; i++) {
             var other = new Property(results[i]['other']);
             var isProperty = results[i]['COUNT(rel)'];
