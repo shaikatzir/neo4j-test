@@ -38,10 +38,18 @@ var search_par = ["Bar", "Hot","Evening", "Dot"]
 //               "user" - the user name - will CREATE a new NODE named "se_%user_%item" and it is connected to both item and user.
 
 ////EXAMPLE : search by keywords, return ordered by popularity
-//start n1=node:node_auto_index(name="Bar"), n2=node:node_auto_index(name="Hot"), n3 = node:node_auto_index(name="Evening"),n4=node:node_auto_index(name="Dot")
+//start n1=node:node_auto_index(name="Bar"), n2=node:node_auto_index(name="Hot"), n3 = node:node_auto_index(name="Evening"),n4=node:node_auto_index(name="Dot"), user = node:node_auto_index(name="shaika")
 //Match (n1) -[*1..2]- (other), (n2) -[*1..2]- (other),(n3) -[*1..2]- (other), (n4) -[*1..2]- (other)
+//MATCH (user) - [?:FRIEND] - (user2) - [rel?:HAS_ITEM] -> (other)
 //WHERE other.type = "item"
-//return other, other.name 
+//return other, other.name , rel
+//ORDER BY other.searches DESC
+
+//start n1=node:node_auto_index(name="Bar"), n2=node:node_auto_index(name="Hot"), user = node:node_auto_index(name="shaika")
+//Match (n1) -[*1..2]- (other), (n2) -[*1..2]- (other)
+//MATCH (user) - [?:FRIEND] - (user2) - [rel?:HAS_ITEM] -> (other)
+//WHERE other.type = "item"
+//return other, other.name , rel
 //ORDER BY other.searches DESC
 
 
