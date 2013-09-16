@@ -14,5 +14,13 @@ block content
     p
         strong
             | Get started:&nbsp;
+    p
             a(href='/users') View all users
+    p
             a(href='/items') View all items
+    p
+            a(href='/item_properties') View all item properties
+            
+    p
+        strong
+            a(href='/search') DONDE

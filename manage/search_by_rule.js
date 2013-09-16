@@ -127,7 +127,7 @@ search_db = function (searchList, user, callback) {
 //WHERE item.type = "item"
 //WITH COLLECT (DISTINCT item.name) as items,
 //     LENGTH ((se) -[:SEARCH]- > () <--(item)) as matching_properties
-//return items, matching_properties
+//return items, matching_properties, number
 //ORDER BY matching_properties DESC
 
 //EXAMPLE : add a serch node connecting it to its keywords search
@@ -137,7 +137,7 @@ search_db = function (searchList, user, callback) {
 //return r, r1, ob
 
 
-search_query = function (search_node) {
+search_query = function (search_node, callback) {
 	
   	var query = [
         'START se=node({seId})',
@@ -146,7 +146,8 @@ search_query = function (search_node) {
         'WITH COLLECT (DISTINCT item.name) as items,',
         'LENGTH ((se) -[:SEARCH]- > () <--(item)) as matching_properties',
         'return items, matching_properties',
-        'ORDER BY matching_properties DESC'
+        'ORDER BY matching_properties DESC',
+        'LIMIT 60',
     ].join('\n')
         
  	console.log(search_node.id);
@@ -157,10 +158,10 @@ search_query = function (search_node) {
     
     db.query(query, params, function (err, results) {
     	if (err){
-        	console.log(err);
+        	callback(err);
         	return;
         }
-    	console.log(results);
+    	callback(null,results);
 	});	
 };
 
@@ -178,7 +179,7 @@ get_time_string = function () {
  };
     
 
-exports.search_key_db = function (searchList, callback) {
+search_key_db = function (searchList, callback) {
 
 	//create a node representing the search and connect it to all the keyword nodes
 	
@@ -190,7 +191,7 @@ exports.search_key_db = function (searchList, callback) {
 	
 	node.save(function (err) {
         if (err){
-        	console.log(err);
+        	callback(err);
         	return;
         }
         console.log('Node saved to database with id:', node.id);
@@ -201,14 +202,14 @@ exports.search_key_db = function (searchList, callback) {
         var createRelationship = function (i) {
         	if (i==searchList.length) {
         	    //When all keywords have been connected to the search node, run the search query
-        		search_query(node);
+        		search_query(node, callback);
         		return;
         	};
         	console.log(searchList[i]);
         	db.getIndexedNodes("node_auto_index","name",searchList[i], function(err,properties){
         		
         		if (err){
-        			console.log(err);
+        			callback(err);
         			return;
 		        };
 		        //console.log(properties[0]);
@@ -216,7 +217,7 @@ exports.search_key_db = function (searchList, callback) {
 		        	//after found the keyword node, create a relationship : (search_node)-[SEARCH]->(keyword_node)
 		            node.createRelationshipTo(properties[0],"SEARCH",{},function(err,rel) {
 		            	if (err){
-		        			console.log(err);
+		        			callback(err);
 		        			return;
 				        };
 				        console.log("create relationship: "+rel);
@@ -236,7 +237,100 @@ exports.search_key_db = function (searchList, callback) {
         
 };
 
-search_key_db (search_par);
+//create a search node and returns its ID
+exports.create_search_node = function(callback) {
+	var node_name = "search_" + get_time_string()
+	console.log(node_name)
+	//create the node with the curretn date and time as its name
+	var node = db.createNode({name: node_name, type : "search_node"})
+	
+	node.save(function (err) {
+        if (err){
+        	callback(err);
+        	return;
+        }
+        console.log('Node saved to database with id:', node.id);
+        callback(null,node.id);
+    });
+    
+};	
+
+//finds 'keyword' node and creates relationship between the search node - 'nodeId' and the keyword node.
+exports.search_create_rel = function (nodeId, keyword,callback) {
+        	
+        	db.getIndexedNodes("node_auto_index","name",keyword, function(err,properties){
+        		
+        		if (err){
+        			callback(err);
+        			return;
+		        };
+		        //console.log(properties[0]);
+		        if (properties[0]){
+		        	//after found the keyword node, create a relationship : (search_node)-[SEARCH]->(keyword_node)
+		        	db.getNodeById(nodeId, function(err, node) {
+		        		if (err){
+		        			callback(err);
+		        			return;
+				        };
+				        node.createRelationshipTo(properties[0],"SEARCH",{},function(err,rel) {
+		            		if (err){
+		        				callback(err);
+			        			return;
+					        };
+					        console.log("create relationship: "+rel);
+					        callback(null);
+			            });
+			        });
+			     }
+			     else{
+			      	errs = "couldn't find: "+ keyword;
+			        callback(errs);
+			     };
+			 });           
+};
+
+//search items connected to the search_nodes, sort them by matching criteria and return items and number of items
+exports.search_items = function (search_node, callback) {
+	
+  	var query = [
+        'START se=node({seId})',
+        'MATCH (se) -[:SEARCH]- > () <--(item)',
+        'WHERE item.type = "item"',
+        'WITH COLLECT (DISTINCT item) as items,',
+        'LENGTH ((se) -[:SEARCH]- > () <--(item)) as matching_properties',
+        'return items, matching_properties',
+        'ORDER BY matching_properties DESC',
+        'LIMIT 60',
+    ].join('\n')
+        
+    var params = {
+        seId : Number(search_node)
+    };
+
+    console.log('start query on ' +Number(search_node));
+    db.query(query, params, function (err, results) {
+    	if (err){
+        	callback(err);
+        	return;
+        }
+        
+        count = 0
+        for (res in results)
+        	count += results[res].items.length
+        console.log('count is ' + count);
+    	callback(null,results,count);
+	});	
+};
+
+
+//search_key_db (search_par , function(err,res) {
+//	if (err){
+//	    console.log(err);
+//	    return;
+//	};
+//	   
+//	console.log(res)
+//	});
 //function (err, res) {
 //	if (err) {
 //		console.log(err);

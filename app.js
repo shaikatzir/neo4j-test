@@ -64,6 +64,11 @@ app.get('/item_properties/:id', routes.item_properties.show);
 app.post('/item_properties/:id', routes.item_properties.edit);
 app.del('/item_properties/:id', routes.item_properties.del);
 
+
+//search
+app.get('/donde',routes.donde.donde);
+app.post('/donde',routes.donde.searchkey);
+
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
 });
