@@ -31,7 +31,7 @@ var query2 = ['START se = node:node_auto_index(name="Cold")',
 
 
 //create a search on db of an item connected to this parameters
-var search_par = ["Bar", "Hot","Evening", "Dot"]
+var search_par = ["Black", "Sleeveless","Zip", "V","Short"]
 
 
 ////search_db - get a list of keywords (searchList) and returns a list of items which connected to all keywords
@@ -42,7 +42,14 @@ var search_par = ["Bar", "Hot","Evening", "Dot"]
 //Match (n1) -[*1..2]- (other), (n2) -[*1..2]- (other),(n3) -[*1..2]- (other), (n4) -[*1..2]- (other)
 //MATCH (user) - [?:FRIEND] - (user2) - [rel?:HAS_ITEM] -> (other)
 //WHERE other.type = "item"
-//return other, other.name 
+//return other, other.name , rel
+//ORDER BY other.searches DESC
+
+//start n1=node:node_auto_index(name="Bar"), n2=node:node_auto_index(name="Hot"), user = node:node_auto_index(name="shaika")
+//Match (n1) -[*1..2]- (other), (n2) -[*1..2]- (other)
+//MATCH (user) - [?:FRIEND] - (user2) - [rel?:HAS_ITEM] -> (other)
+//WHERE other.type = "item"
+//return other, other.name , rel
 //ORDER BY other.searches DESC
 
 
@@ -103,14 +110,142 @@ search_db = function (searchList, user, callback) {
 
 
 
-search_db (search_par, "shaika", function (err, res) {
-	if (err) {
-		console.log(err);
-		return;
-		}
-	for (var i = 0; i < res.length; i++) {
-		console.log(res[i]["other.name"]);
-	}
-});
-		 			
+//search_db (search_par, "shaika", function (err, res) {
+//	if (err) {
+//		console.log(err);
+//		return;
+//		}
+//	for (var i = 0; i < res.length; i++) {
+//		console.log(res[i]["other.name"]);
+//	}
+//});
+
+
+
+//start se=node:node_auto_index(name="search_try")
+//MATCH (se) -[:SEARCH]- > () <--(item)
+//WHERE item.type = "item"
+//WITH COLLECT (DISTINCT item.name) as items,
+//     LENGTH ((se) -[:SEARCH]- > () <--(item)) as matching_properties
+//return items, matching_properties
+//ORDER BY matching_properties DESC
+
+//EXAMPLE : add a serch node connecting it to its keywords search
+//start n1=node:node_auto_index(name="Black"), n2=node:node_auto_index(name="Zip"), n3 = node:node_auto_index(name="V")
+//CREATE (ob{name: "search_try", type : "search_node"})
+//Create unique (ob) - [r :SEARCH] -> (n1), ob - [r1 :SEARCH] -> (n2), (ob) - [r2:SEARCH] -> (n3)
+//return r, r1, ob
+
+
+search_query = function (search_node) {
+	
+  	var query = [
+        'START se=node({seId})',
+        'MATCH (se) -[:SEARCH]- > () <--(item)',
+        'WHERE item.type = "item"',
+        'WITH COLLECT (DISTINCT item.name) as items,',
+        'LENGTH ((se) -[:SEARCH]- > () <--(item)) as matching_properties',
+        'return items, matching_properties',
+        'ORDER BY matching_properties DESC'
+    ].join('\n')
+        
+ 	console.log(search_node.id);
+    var params = {
+        seId : search_node.id
+    };
+
+    
+    db.query(query, params, function (err, results) {
+    	if (err){
+        	console.log(err);
+        	return;
+        }
+    	console.log(results);
+	});	
+};
+
+get_time_string = function () {
+    
+
+	var currentdate = new Date(); 
+	var datetime = currentdate.getDate() + "/"
+                + (currentdate.getMonth()+1)  + "/" 
+                + currentdate.getFullYear() + "@"  
+                + currentdate.getHours() + ":"  
+                + currentdate.getMinutes() + ":" 
+                + currentdate.getSeconds();
+    return datetime;
+ };
+    
+
+search_key_db = function (searchList, user, callback) {
+
+	//create a node representing the search and connect it to all the keyword nodes
+	
+	
+	var node_name = "search_" + get_time_string()
+	console.log(node_name)
+	//create the node with the curretn date and time as its name
+	var node = db.createNode({name: node_name, type : "search_node"})
+	
+	node.save(function (err) {
+        if (err){
+        	console.log(err);
+        	return;
+        }
+        console.log('Node saved to database with id:', node.id);
+        
+        console.log(searchList.length)
+        
+        //for each keyword in "search_list",look for it in the graph db
+        var createRelationship = function (i) {
+        	if (i==searchList.length) {
+        	    //When all keywords have been connected to the search node, run the search query
+        		search_query(node);
+        		return;
+        	};
+        	console.log(searchList[i]);
+        	db.getIndexedNodes("node_auto_index","name",searchList[i], function(err,properties){
+        		
+        		if (err){
+        			console.log(err);
+        			return;
+		        };
+		        //console.log(properties[0]);
+		        if (properties[0]){
+		        	//after found the keyword node, create a relationship : (search_node)-[SEARCH]->(keyword_node)
+		            node.createRelationshipTo(properties[0],"SEARCH",{},function(err,rel) {
+		            	if (err){
+		        			console.log(err);
+		        			return;
+				        };
+				        console.log("create relationship: "+rel);
+				        createRelationship(i+1);
+		            });
+		        }
+		        else{
+		        	console.log("couldn't find: "+searchList[i]);
+		            createRelationship(i+1);
+		        };
+		            
+		    });
+		        
+        };
+        createRelationship (0);
+        return});
+        
+};
+
+search_key_db (search_par, "shaika");
+//function (err, res) {
+//	if (err) {
+//		console.log(err);
+//		return;
+//		}
+//	for (var i = 0; i < res.length; i++) {
+//		console.log(res[i]["other.name"]);
+//	}
+//});
+
+				
 
