@@ -2,11 +2,10 @@ extends layout
 
 block content
     h1 #{item.name}
+    img(src='#{pic}', height='80', width='80')
 
     p
         a(href='/items') Back to everyone
-
-        p #{item.name} isn't following anyone currently.
 
     //ITEM Properties
     if properties.length

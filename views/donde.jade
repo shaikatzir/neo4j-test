@@ -29,9 +29,10 @@ block content
                       td 
                           p #{result.matching_properties}
                       td
-                          for item in result.items
-                             
-                             p  #{item.data.name}
+                          - for (var i=0;i<result.items.length;i++) {
+                             br
+                             a(href='/items/#{result.items_id[i]}')  #{result.items[i]}
+                          - }
                         
 
     

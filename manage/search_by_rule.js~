@@ -122,13 +122,14 @@ search_db = function (searchList, user, callback) {
 
 
 
-//start se=node:node_auto_index(name="search_try")
-//MATCH (se) -[:SEARCH]- > () <--(item)
-//WHERE item.type = "item"
-//WITH COLLECT (DISTINCT item.name) as items,
-//     LENGTH ((se) -[:SEARCH]- > () <--(item)) as matching_properties
-//return items, matching_properties, number
-//ORDER BY matching_properties DESC
+start se=node:node_auto_index(name="search_try")
+MATCH (se) -[:SEARCH]- > () <--(item)
+WHERE item.type = "item"
+WITH COLLECT (DISTINCT item.name) as items,
+	COLLECT (DISTINCT ID(item)) as items_id,
+     LENGTH ((se) -[:SEARCH]- > () <--(item)) as matching_properties
+return items, matching_properties, items_id
+ORDER BY matching_properties DESC
 
 //EXAMPLE : add a serch node connecting it to its keywords search
 //start n1=node:node_auto_index(name="Black"), n2=node:node_auto_index(name="Zip"), n3 = node:node_auto_index(name="V")
@@ -266,7 +267,10 @@ exports.search_create_rel = function (nodeId, searchList,callback) {
 		    //for each keyword in "search_list",look for it in the graph db
         	var createRelationship = function (i) {
         		//When all keywords have been connected to the search node we are donde
-	        	if (i==searchList.length) callback(null);
+	        	if (i==searchList.length) {
+	        		callback(null);
+	        		return;
+	        	}
 	        	console.log(searchList[i]);
 	        	db.getIndexedNodes("node_auto_index","name",searchList[i], function(err,properties){
         		
@@ -305,9 +309,10 @@ exports.search_items = function (search_node, callback) {
         'START se=node({seId})',
         'MATCH (se) -[:SEARCH]- > () <--(item)',
         'WHERE item.type = "item"',
-        'WITH COLLECT (DISTINCT item) as items,',
+        'WITH COLLECT (DISTINCT item.name) as items,',
+		'COLLECT (DISTINCT ID(item)) as items_id,',
         'LENGTH ((se) -[:SEARCH]- > () <--(item)) as matching_properties',
-        'return items, matching_properties',
+        'return items, matching_properties, items_id',
         'ORDER BY matching_properties DESC',
         'LIMIT 60',
     ].join('\n')

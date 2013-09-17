@@ -126,8 +126,9 @@ search_db = function (searchList, user, callback) {
 //MATCH (se) -[:SEARCH]- > () <--(item)
 //WHERE item.type = "item"
 //WITH COLLECT (DISTINCT item.name) as items,
+//	COLLECT (DISTINCT ID(item)) as items_id,
 //     LENGTH ((se) -[:SEARCH]- > () <--(item)) as matching_properties
-//return items, matching_properties, number
+//return items, matching_properties, items_id
 //ORDER BY matching_properties DESC
 
 //EXAMPLE : add a serch node connecting it to its keywords search
@@ -308,9 +309,10 @@ exports.search_items = function (search_node, callback) {
         'START se=node({seId})',
         'MATCH (se) -[:SEARCH]- > () <--(item)',
         'WHERE item.type = "item"',
-        'WITH COLLECT (DISTINCT item) as items,',
+        'WITH COLLECT (DISTINCT item.name) as items,',
+		'COLLECT (DISTINCT ID(item)) as items_id,',
         'LENGTH ((se) -[:SEARCH]- > () <--(item)) as matching_properties',
-        'return items, matching_properties',
+        'return items, matching_properties, items_id',
         'ORDER BY matching_properties DESC',
         'LIMIT 60',
     ].join('\n')

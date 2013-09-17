@@ -34,10 +34,12 @@ exports.create = function (req, res, next) {
 exports.show = function (req, res, next) {
     item.get(req.params.id, function (err, item) {
         if (err) return next(err);
-	item.getItemProperties(function (err, properties, other_prs) {
+	item.getItemProperties(function (err, properties, other_prs, pic) {
             if (err) return next(err);
+            console.log(pic)
             res.render('item', {
                 item: item,
+                pic : pic,
                 properties: properties,
                 other_prs : other_prs
             });

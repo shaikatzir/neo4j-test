@@ -43,6 +43,16 @@ Object.defineProperty(Item.prototype, 'name', {
     }
 });
 
+Object.defineProperty(Item.prototype, 'pic', {
+    get: function () {
+        return this._node.data['pic'];
+    },
+    set: function (pic) {
+        this._node.data['pic'] = pic;
+    }
+});
+
+
 // private instance methods:
 Item.prototype._getPropertyRel = function (other, callback) {
     var query = [
@@ -98,7 +108,7 @@ Item.prototype.getItemProperties = function (callback) {
     var query = [
         'START item=node({itemId}), other=node:INDEX_NAME(INDEX_KEY="INDEX_PROPERTY_VAL")',
         'MATCH (item) -[rel?]-> (other)',
-        'RETURN other, COUNT(rel) ',  // COUNT(rel) is a hack for 1 or 0
+        'RETURN other, COUNT(rel) , item.pic as pic',  // COUNT(rel) is a hack for 1 or 0
         'ORDER BY other.name'
     ].join('\n')
         .replace('INDEX_NAME', INDEX_NAME)
@@ -124,7 +134,9 @@ Item.prototype.getItemProperties = function (callback) {
                 others.push(other);
             }
        } 
-       callback(null, properties, others);
+       console.log(this.pic);
+       console.log(results[0]['pic']);
+       callback(null, properties, others, results[0]['pic']);
     });
 };
 
