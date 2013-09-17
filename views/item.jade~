@@ -2,7 +2,7 @@ extends layout
 
 block content
     h1 #{item.name}
-    img(src='#{pic}', height='80', width='80')
+    img(src='http://#{pic}', height='80', width='80')
 
     p
         a(href='/items') Back to everyone

@@ -15,6 +15,7 @@ exports.donde = function(req, res){
   	res.render('donde',{
             node : node,
             index : 0,
+            last : false,
             question : Questions.QUESTIONS[Questions.QUESTIONS_ORDER[0]],
             q_values : Questions.QUESTIONS_VAL[Questions.QUESTIONS_ORDER[0]]
         });
@@ -28,7 +29,10 @@ exports.donde = function(req, res){
 exports.searchkey = function (req, res, next) {
     params = req.body
     node = req.body['node']
-    index = Number(req.body['index'])+1
+    index = Number(req.body['index'])+1;
+    console.log(Questions.QUESTIONS_ORDER.length)
+    
+    last=(index >= Questions.QUESTIONS_ORDER.length);
     arr = Object.keys(params);
     //remove first two elements : 'node' and 'index'
     arr.splice(0, 2);
@@ -41,12 +45,14 @@ exports.searchkey = function (req, res, next) {
     	Search.search_items(node, function(err,items,count) {
     		if (err)
     			return next(err);
-    		console.log(items[0].items[0]);
+    		//console.log(items[0].items[0]);
+    		console.log(last);
     		console.log(index)
     		console.log(Questions.QUESTIONS_VAL[Questions.QUESTIONS_ORDER[index]]);
     		res.render('donde',{
     			node : node,
     			index : index,
+    			last : last,
             	question : Questions.QUESTIONS[Questions.QUESTIONS_ORDER[index]],
             	q_values : Questions.QUESTIONS_VAL[Questions.QUESTIONS_ORDER[index]],
             	results : items,

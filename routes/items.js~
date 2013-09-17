@@ -36,6 +36,7 @@ exports.show = function (req, res, next) {
         if (err) return next(err);
 	item.getItemProperties(function (err, properties, other_prs, pic) {
             if (err) return next(err);
+            console.log(pic)
             res.render('item', {
                 item: item,
                 pic : pic,

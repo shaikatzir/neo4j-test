@@ -1,11 +1,12 @@
 extends layout
 
 block content
-    h1 DONDE IT - Look for a dress
+    if (last == false)
+       h1 DONDE IT - Look for a dress
 
-    h2 Question #{index+1}
+       h2 Question #{index+1}
 
-    form(action='', method='POST')
+       form(action='', method='POST')
             
             input(type='hidden' , name='node', value=node)
             input(type='hidden' , name='index', value=index)
@@ -16,8 +17,10 @@ block content
                 br
             
             input(type='submit', value='Donde')
-    
+    else
+       h1 DONDE - results
     if (typeof(results) !== 'undefined')
+      if (count > 0)
         p got #{count} dresses :
         div
           table
@@ -33,6 +36,7 @@ block content
                              br
                              a(href='/items/#{result.items_id[i]}')  #{result.items[i]}
                           - }
-                        
+      else
+          p no results yet...                  
 
     
