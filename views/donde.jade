@@ -3,16 +3,22 @@ extends layout
 block content
     h1 DONDE IT - Look for a dress
 
-    h2 Question 1
+    h2 Question #{index+1}
 
     form(action='', method='POST')
-            p Search Keyword:
+            
             input(type='hidden' , name='node', value=node)
-            input(type='text', name='keyword', placeholder='Keyword', required)
+            input(type='hidden' , name='index', value=index)
+            p #{question}
+            each val in q_values
+                input(type="checkbox", name="#{val}")
+                label(for='#{val}') #{val}
+                br
+            
             input(type='submit', value='Donde')
     
     if (typeof(results) !== 'undefined')
-        p got #{count} number of dresses :
+        p got #{count} dresses :
         div
           table
              thead
@@ -24,8 +30,8 @@ block content
                           p #{result.matching_properties}
                       td
                           for item in result.items
-                             \\img(src="http://#{item.data.pic}") 
-                             p  #{item.data.pic}
-
+                             
+                             p  #{item.data.name}
+                        
 
     

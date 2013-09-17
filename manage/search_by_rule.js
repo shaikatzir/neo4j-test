@@ -255,38 +255,50 @@ exports.create_search_node = function(callback) {
     
 };	
 
-//finds 'keyword' node and creates relationship between the search node - 'nodeId' and the keyword node.
-exports.search_create_rel = function (nodeId, keyword,callback) {
-        	
-        	db.getIndexedNodes("node_auto_index","name",keyword, function(err,properties){
-        		
-        		if (err){
-        			callback(err);
-        			return;
+//finds 'searchList' nodes and creates relationships between the search node - 'nodeId' and the searchList nodes.
+exports.search_create_rel = function (nodeId, searchList,callback) {
+		//first get the node	
+        db.getNodeById(nodeId, function(err, node) {
+			if (err){
+		   			callback(err);
+		   			return;
 		        };
-		        //console.log(properties[0]);
-		        if (properties[0]){
-		        	//after found the keyword node, create a relationship : (search_node)-[SEARCH]->(keyword_node)
-		        	db.getNodeById(nodeId, function(err, node) {
-		        		if (err){
-		        			callback(err);
-		        			return;
-				        };
-				        node.createRelationshipTo(properties[0],"SEARCH",{},function(err,rel) {
-		            		if (err){
-		        				callback(err);
+		    //for each keyword in "search_list",look for it in the graph db
+        	var createRelationship = function (i) {
+        		//When all keywords have been connected to the search node we are donde
+	        	if (i==searchList.length) {
+	        		callback(null);
+	        		return;
+	        	}
+	        	console.log(searchList[i]);
+	        	db.getIndexedNodes("node_auto_index","name",searchList[i], function(err,properties){
+        		
+        			if (err){
+        				callback(err);
+	        			return;
+			        };
+			        //console.log(properties[0]);
+			        if (properties[0]){
+			        	//after found the keyword node, create a relationship : (search_node)-[SEARCH]->(keyword_node)
+			            node.createRelationshipTo(properties[0],"SEARCH",{},function(err,rel) {
+			            	if (err){
+			        			callback(err);
 			        			return;
 					        };
 					        console.log("create relationship: "+rel);
-					        callback(null);
+					        createRelationship(i+1);
 			            });
-			        });
-			     }
-			     else{
-			      	errs = "couldn't find: "+ keyword;
-			        callback(errs);
-			     };
-			 });           
+			        }
+			        else{
+			        	console.log("couldn't find: "+searchList[i]);
+			            createRelationship(i+1);
+			        };
+		            
+			    });
+		        
+    	    };
+        	createRelationship (0);    
+		});	 
 };
 
 //search items connected to the search_nodes, sort them by matching criteria and return items and number of items
