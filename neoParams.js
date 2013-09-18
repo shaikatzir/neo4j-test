@@ -37,7 +37,7 @@ SLEEVES =       ['Sleeveless', 'Strapless', '3/4', 'One-Shoulder', 'Off-Shoulder
 categories_A_num = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 0]
 categories_B = ['LONG', 'SHORT', 'MIDI', 'ASYMMETRIC','MINI','MAXI','KNEE LENGTH','MIDI', 'NONE']
 //Graph DB Lengths
-LENGTH = ['Long','Short','Midi','Maxi']
+LENGTH = ['Long','Short','Midi','Maxi','Asymmetric']
 categories_B_num = [1, 2, 3, 4, 5, 6, 7, 8, 0]
 categories_C = ['KEYHOLE NECK', 'FALLING-NECK','WIDE-NECK', 'JEWELLED-COLLAR', 'JEWLLED-NECK', 'V-NECK','V-COLLAR', 'GOLF', 'HIGH-NECK', 'HIGH-COLLAR', 'BUTTON-DOWN', 'BUTTON-NECK', 'TURTLE', 'BOAT-NECK', 'ROUND-NECK','ROUND-NECK','FUR-NECK', 'FUR-DETAIL', 'FUR-COLLAR','FUR-LINED-COLLAR','SHEAR-NECK', 'LACE-NECK', 'LACE-COLLAR', 'ASYMMETRIC-NECK','FUR-PARKA', 'SQUARE-NECK','DOUBLE-COLLAR', 'DOUBLE-NECK', 'COLLAR','HEART-NECK','HALTER-NECK','NONE']
 
