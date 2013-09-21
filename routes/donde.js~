@@ -45,7 +45,7 @@ exports.searchkey = function (req, res, next) {
     	Search.search_items(node, function(err,items,count) {
     		if (err)
     			return next(err);
-    		console.log(items[0].items[0]);
+    		//console.log(items[0].items[0]);
     		console.log(last);
     		console.log(index)
     		console.log(Questions.QUESTIONS_VAL[Questions.QUESTIONS_ORDER[index]]);

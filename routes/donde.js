@@ -30,15 +30,16 @@ exports.searchkey = function (req, res, next) {
     params = req.body
     node = req.body['node']
     index = Number(req.body['index'])+1;
-    console.log(Questions.QUESTIONS_ORDER.length)
-    
+ 
     last=(index >= Questions.QUESTIONS_ORDER.length);
     arr = Object.keys(params);
     //remove first two elements : 'node' and 'index'
     arr.splice(0, 2);
     console.log(arr);
     console.log(node);
-    Search.search_create_rel(node, arr,function(err) {
+    //get the category of the last question
+    cat = Questions.QUESTIONS_ORDER[index-1]
+    Search.search_create_rel(node, cat, arr,function(err) {
     	if (err)
     		return next(err);
     	console.log("search in : "+node)

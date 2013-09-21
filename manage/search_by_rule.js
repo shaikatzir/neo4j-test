@@ -256,9 +256,9 @@ exports.create_search_node = function(callback) {
     
 };	
 
-//finds 'searchList' nodes and creates relationships between the search node - 'nodeId' and the searchList nodes.
-exports.search_create_rel = function (nodeId, searchList,callback) {
-		//first get the node	
+//finds 'searchList' nodes and creates relationships between the search node - 'nodeId' and the searchList nodes of category 'cat' .
+exports.search_create_rel = function (nodeId, cat, searchList,callback) {
+		//first get the search node	
         db.getNodeById(nodeId, function(err, node) {
 			if (err){
 		   			callback(err);
@@ -278,23 +278,36 @@ exports.search_create_rel = function (nodeId, searchList,callback) {
         				callback(err);
 	        			return;
 			        };
-			        //console.log(properties[0]);
-			        if (properties[0]){
-			        	//after found the keyword node, create a relationship : (search_node)-[SEARCH]->(keyword_node)
-			            node.createRelationshipTo(properties[0],"SEARCH",{},function(err,rel) {
-			            	if (err){
-			        			callback(err);
-			        			return;
-					        };
-					        console.log("create relationship: "+rel);
-					        createRelationship(i+1);
-			            });
-			        }
-			        else{
+			        console.log(properties.length);
+			        console.log("cat is " +cat)
+			        for (pr in properties) {
+			            if (properties[pr].data.category == cat){
+			                console.log("start create relationship");
+			            	//after found the keyword node, create a relationship : (search_node)-[SEARCH]->(keyword_node)
+				            node.createRelationshipTo(properties[pr],"SEARCH",{},function(err,rel) {
+	   			               if (err){
+	   			                    console.log("createRelationshipTo ERROR RRR");
+				        		    callback(err);
+				        		    return;
+						        };
+						        console.log("create relationship: "+rel);
+						        createRelationship(i+1);
+						        return;
+			                });
+			            }      	   
+			        }          	   
+			                   	   
+             	   
+					    
+					//  TODO : can get stuck and never return if found relationships but couldnt find the 'cat'
+			        if (properties.length == 0){
 			        	console.log("couldn't find: "+searchList[i]);
-			            createRelationship(i+1);
-			        };
-		            
+			        	createRelationship(i+1);
+			        }
+			        
+			        return;
+			        
+			        
 			    });
 		        
     	    };
@@ -354,6 +367,14 @@ exports.search_items = function (search_node, callback) {
 //		console.log(res[i]["other.name"]);
 //	}
 //});
+
+
+//SET "cat" PROPERTY OF ALL ITEM PROPERTIES, BY THEIR CATEGORY
+//start cat=node:node_auto_index(type ="item_property_cat")
+//MATCH (cat) -[:CAT]- (pr)
+//SET pr.category= cat.name
+//return pr.name, pr.category
+
 
 				
 
