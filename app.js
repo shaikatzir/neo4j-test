@@ -69,6 +69,8 @@ app.del('/item_properties/:id', routes.item_properties.del);
 app.get('/donde',routes.donde.donde);
 app.post('/donde',routes.donde.searchkey);
 
+require('./router').init(app);
+
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
 });

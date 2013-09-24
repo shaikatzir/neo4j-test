@@ -1,8 +1,11 @@
 
-
+imgPrefix = 'http://donde-app.com:2222/0.1/API/getImg/323232/img='
 //Graph DB colors
 COLORS = ['Black','White','Grey','Blue','Red','Beige','Pink','Brown','Yellow','Orange','Green','Purple','Leopard', 'Zebra','Gold','Silver']
-
+COLORS_IMG ={}
+for (cl in COLORS){
+	COLORS_IMG[COLORS[cl]] = imgPrefix + COLORS[cl]
+}
 
 //Graph DB patterns
 PATTERNS = ['Leopard', 'Zebra', 'Animal', 'Floral','Dot','Plain','Print', 'Stripe', 'Geomatric Print', 'Camouflage', 'Plaid', 'Snake','Two Color']

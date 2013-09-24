@@ -256,6 +256,47 @@ exports.create_search_node = function(callback) {
     
 };	
 
+//create a search node and returns its ID
+exports.get_create_search_node = function(name, callback) {
+	var node_name = name
+	console.log(node_name)
+	db.getIndexedNodes("node_auto_index","name", name, function(err,nodes){
+		if (err){
+			console.log("error index search" + err)
+        	callback(err);
+        	return;
+        }
+        if (nodes.length > 0)	{
+         	for (i in nodes)
+         		if (nodes[i].data.type=="search_node"){
+         			console.log("found node");
+		        	callback(null,nodes[i].id);
+		        	return;
+		        }
+		
+		}        
+        //couldn't found node - create new one
+        console.log("create new node")
+        //create the node with the nod_name
+		var node = db.createNode({name: node_name, type : "search_node"})
+	
+		node.save(function (err) {
+		    if (err){
+		       	callback(err);
+		       	return;
+		    }
+		    console.log('Node saved to database with id:', node.id);
+		    callback(null,node.id);
+		});
+		
+		
+	});
+	
+		    
+    
+};	
+
+
 //finds 'searchList' nodes and creates relationships between the search node - 'nodeId' and the searchList nodes of category 'cat' .
 exports.search_create_rel = function (nodeId, cat, searchList,callback) {
 		//first get the search node	
@@ -302,8 +343,9 @@ exports.search_create_rel = function (nodeId, cat, searchList,callback) {
 					//  TODO : can get stuck and never return if found relationships but couldnt find the 'cat'
 			        if (properties.length == 0){
 			        	console.log("couldn't find: "+searchList[i]);
+			        	createRelationship(i+1);
 			        }
-			        createRelationship(i+1);
+			        
 			        return;
 			        
 			        
@@ -323,8 +365,9 @@ exports.search_items = function (search_node, callback) {
         'WHERE item.type = "item"',
         'WITH COLLECT (DISTINCT item.name) as items,',
 		'COLLECT (DISTINCT ID(item)) as items_id,',
+		'COLLECT (DISTINCT item.pic) as pics,',
         'LENGTH ((se) -[:SEARCH]- > () <--(item)) as matching_properties',
-        'return items, matching_properties, items_id',
+        'return items, matching_properties, items_id, pics',
         'ORDER BY matching_properties DESC',
         'LIMIT 60',
     ].join('\n')
@@ -368,12 +411,15 @@ exports.search_items = function (search_node, callback) {
 //});
 
 
-//SET "cat" PROPERTY OF ALL ITEM PROPERTIES, BY THEIR CATEGORY
+//DESC : SET "cat" PROPERTY OF ALL ITEM PROPERTIES, BY THEIR CATEGORY
 //start cat=node:node_auto_index(type ="item_property_cat")
 //MATCH (cat) -[:CAT]- (pr)
 //SET pr.category= cat.name
 //return pr.name, pr.category
 
-
-				
+//DESC : FIND ALL NODES STARTING - "Forever 21" - TRYING TO FIND ALL "Forever 21+" (plus sizes)
+//start n=node:node_auto_index(type="item")
+//match n
+//where  HAS(n.detailed_desc) AND n.detailed_desc =~ "^Forever 21.*"
+//RETURN n, n.name, n.detailed_desc				
 

@@ -1,7 +1,9 @@
 var Search = require('../manage/search_by_rule');
 var Questions = require ('../neoParams');
+
+
 /*
- * GET home page.
+ * GET donde page.
  */
 
 exports.donde = function(req, res){
@@ -72,4 +74,7 @@ exports.searchkey = function (req, res, next) {
 //        });
 //    });
 };
+
+
+
 
