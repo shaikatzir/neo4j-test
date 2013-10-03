@@ -369,7 +369,7 @@ exports.search_items = function (search_node, callback) {
         'LENGTH ((se) -[:SEARCH]- > () <--(item)) as matching_properties',
         'return items, matching_properties, items_id, pics',
         'ORDER BY matching_properties DESC',
-        'LIMIT 60',
+        'LIMIT 10',
     ].join('\n')
         
     var params = {
@@ -421,5 +421,17 @@ exports.search_items = function (search_node, callback) {
 //start n=node:node_auto_index(type="item")
 //match n
 //where  HAS(n.detailed_desc) AND n.detailed_desc =~ "^Forever 21.*"
-//RETURN n, n.name, n.detailed_desc				
+//RETURN n, n.name, n.detailed_desc	
+
+//DESC :DELETE ALL IN A SPECIFIC CATEGORY
+//start pr=node(*)
+//match (pr)-[r] - ()
+//where HAS(pr.category) AND (pr.category = 'Misc')
+//delete pr, r
+
+
+//start pr=node:node_auto_index(type="item_property")
+//match (pr)
+//where HAS(pr.category) AND (pr.category = 'Misc')
+//return  pr.name			
 

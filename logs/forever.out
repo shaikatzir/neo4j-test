@@ -1,16 +1,281 @@
 remote
 Express server listening on port 3000
 localhost
-/0.1/API/dynamicSearch/323232/node=shaikat8&clientID=51ac9b24e9f48404230000e5&
-/0.1/API/dynamicSearch/323232/node=shaikat8&clientID=51ac9b24e9f48404230000e5&
-/0.1/API/dynamicSearch/323232/node=shaikat8&clientID=51ac9b24e9f48404230000e5&
+/0.1/API/dynamicSearch/323232/node=shaikat11&clientID=51ac9b24e9f48404230000e5&
+/0.1/API/dynamicSearch/323232/node=shaikat11&clientID=51ac9b24e9f48404230000e5&
+/0.1/API/dynamicSearch/323232/node=shaikat11&clientID=51ac9b24e9f48404230000e5&
 GET
-parameters len is : 48
-{"node":"shaikat8","clientID":"51ac9b24e9f48404230000e5","":""}
-start dynamic search. name = shaikat8
-shaikat8
-found node
-got node id 952
+parameters len is : 49
+{"node":"shaikat11","clientID":"51ac9b24e9f48404230000e5","":""}
+start dynamic search. name = shaikat11
+shaikat11
+create new node
+Node saved to database with id: 1105
+got node id 1105
+val is : SILVER
+val is : PINK
+val is : PURPLE
+val is : WHITE
+val is : BLACK
+val is : ORANGE
+val is : GREEN
+val is : BLUE
+val is : GREY
+val is : BROWN
+val is : LEOPARD
+val is : YELLOW
+val is : GOLD
+val is : ZEBRA
+val is : BEIGE
+val is : RED
 answer first time [object Object]
-ret is : {"success":true,"error":"","num":0,"profile":{"nextFeature":"Color","values":[{"value":"Black","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=Floral"}],"question":"What color is the dress?"},"nextFeature":1}
-[90mGET /0.1/API/dynamicSearch/323232/node=shaikat8&clientID=51ac9b24e9f48404230000e5& [32m200 [90m6241ms - 300b[0m
+ret is : {"success":true,"error":"","num":0,"profile":{"nextFeature":"Color","values":[{"value":"SILVER","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=SILVER"},{"value":"PINK","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=PINK"},{"value":"PURPLE","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=PURPLE"},{"value":"WHITE","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=WHITE"},{"value":"BLACK","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=BLACK"},{"value":"ORANGE","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=ORANGE"},{"value":"GREEN","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=GREEN"},{"value":"BLUE","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=BLUE"},{"value":"GREY","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=GREY"},{"value":"BROWN","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=BROWN"},{"value":"LEOPARD","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=LEOPARD"},{"value":"YELLOW","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=YELLOW"},{"value":"GOLD","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=GOLD"},{"value":"ZEBRA","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=ZEBRA"},{"value":"BEIGE","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=BEIGE"},{"value":"RED","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=RED"}],"question":"What color is the dress?"},"nextFeature":1}
+[90mGET /0.1/API/dynamicSearch/323232/node=shaikat11&clientID=51ac9b24e9f48404230000e5& [32m200 [90m1596ms - 2.02kb[0m
+localhost
+/0.1/API/dynamicSearch/323232/name=Color&value=SILVER&node=shaikat11&clientID=51ac9b24e9f48404230000e5&
+/0.1/API/dynamicSearch/323232/name=Color&value=SILVER&node=shaikat11&clientID=51ac9b24e9f48404230000e5&
+/0.1/API/dynamicSearch/323232/name=Color&value=SILVER&node=shaikat11&clientID=51ac9b24e9f48404230000e5&
+GET
+parameters len is : 73
+{"name":"Color","value":"SILVER","node":"shaikat11","clientID":"51ac9b24e9f48404230000e5","":""}
+start dynamic search. name = shaikat11
+shaikat11
+found node
+got node id 1105
+search node id 1105
+SILVER
+1
+cat is Color
+start create relationship
+create relationship: [object Object]
+search in : 1105
+start query on 1105
+count is 2
+val is : FLORAL
+val is : STRIPE
+val is : ANIMAL
+val is : PRINT
+val is : DOT
+val is : SNAKE
+val is : LEOPARD
+val is : ZEBRA
+val is : PLAID
+val is : TWO COLOR
+answer [object Object]
+ret is : {"success":true,"error":"","num":0,"profile":{"nextFeature":"Pattern","values":[{"value":"FLORAL","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=FLORAL"},{"value":"STRIPE","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=STRIPE"},{"value":"ANIMAL","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=ANIMAL"},{"value":"PRINT","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=PRINT"},{"value":"DOT","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=DOT"},{"value":"SNAKE","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=SNAKE"},{"value":"LEOPARD","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=LEOPARD"},{"value":"ZEBRA","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=ZEBRA"},{"value":"PLAID","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=PLAID"},{"value":"TWO COLOR","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=TWO COLOR"}],"question":"What is the pattern of the dress?"},"nextFeature":1}
+[90mGET /0.1/API/dynamicSearch/323232/name=Color&value=SILVER&node=shaikat11&clientID=51ac9b24e9f48404230000e5& [32m200 [90m2010ms - 1.35kb[0m
+localhost
+/0.1/API/dynamicSearch/323232/name=Pattern&value=PRINT&node=shaikat11&clientID=51ac9b24e9f48404230000e5&
+/0.1/API/dynamicSearch/323232/name=Pattern&value=PRINT&node=shaikat11&clientID=51ac9b24e9f48404230000e5&
+/0.1/API/dynamicSearch/323232/name=Pattern&value=PRINT&node=shaikat11&clientID=51ac9b24e9f48404230000e5&
+GET
+parameters len is : 74
+{"name":"Pattern","value":"PRINT","node":"shaikat11","clientID":"51ac9b24e9f48404230000e5","":""}
+start dynamic search. name = shaikat11
+shaikat11
+found node
+got node id 1105
+search node id 1105
+PRINT
+1
+cat is Pattern
+start create relationship
+create relationship: [object Object]
+search in : 1105
+start query on 1105
+count is 59
+val is : CHIFFON
+val is : FUR
+val is : LACE
+val is : LEATHER
+val is : SILK
+val is : TRANSPARENT
+val is : STITCH
+val is : JEANS
+val is : WOOL
+val is : SATIN
+val is : NYLON
+answer [object Object]
+ret is : {"success":true,"error":"","num":0,"profile":{"nextFeature":"Material","values":[{"value":"CHIFFON","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=CHIFFON"},{"value":"FUR","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=FUR"},{"value":"LACE","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=LACE"},{"value":"LEATHER","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=LEATHER"},{"value":"SILK","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=SILK"},{"value":"TRANSPARENT","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=TRANSPARENT"},{"value":"STITCH","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=STITCH"},{"value":"JEANS","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=JEANS"},{"value":"WOOL","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=WOOL"},{"value":"SATIN","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=SATIN"},{"value":"NYLON","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=NYLON"}],"question":"What is the material of the dress?"},"nextFeature":1}
+[90mGET /0.1/API/dynamicSearch/323232/name=Pattern&value=PRINT&node=shaikat11&clientID=51ac9b24e9f48404230000e5& [32m200 [90m2318ms - 1.47kb[0m
+localhost
+/0.1/API/dynamicSearch/323232/name=Material&value=LEATHER&node=shaikat11&clientID=51ac9b24e9f48404230000e5&
+/0.1/API/dynamicSearch/323232/name=Material&value=LEATHER&node=shaikat11&clientID=51ac9b24e9f48404230000e5&
+/0.1/API/dynamicSearch/323232/name=Material&value=LEATHER&node=shaikat11&clientID=51ac9b24e9f48404230000e5&
+GET
+parameters len is : 77
+{"name":"Material","value":"LEATHER","node":"shaikat11","clientID":"51ac9b24e9f48404230000e5","":""}
+start dynamic search. name = shaikat11
+shaikat11
+found node
+got node id 1105
+search node id 1105
+LEATHER
+1
+cat is Material
+start create relationship
+create relationship: [object Object]
+search in : 1105
+start query on 1105
+count is 69
+val is : LONG-SLEEVE
+val is : SLEEVELESS
+val is : CAP-SLEEVE
+val is : SHORT-SLEEVE
+val is : STRAP
+val is : STRAPLESS
+val is : 3/4-SLEEVE
+val is : ASYMMETRIC-SLEEVE
+answer [object Object]
+ret is : {"success":true,"error":"","num":0,"profile":{"nextFeature":"Sleeve","values":[{"value":"LONG-SLEEVE","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=LONG-SLEEVE"},{"value":"SLEEVELESS","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=SLEEVELESS"},{"value":"CAP-SLEEVE","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=CAP-SLEEVE"},{"value":"SHORT-SLEEVE","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=SHORT-SLEEVE"},{"value":"STRAP","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=STRAP"},{"value":"STRAPLESS","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=STRAPLESS"},{"value":"3/4-SLEEVE","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=3/4-SLEEVE"},{"value":"ASYMMETRIC-SLEEVE","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=ASYMMETRIC-SLEEVE"}],"question":"What kind of sleeves the dress has?"},"nextFeature":1}
+[90mGET /0.1/API/dynamicSearch/323232/name=Material&value=LEATHER&node=shaikat11&clientID=51ac9b24e9f48404230000e5& [32m200 [90m2044ms - 1.2kb[0m
+localhost
+/0.1/API/dynamicSearch/323232/name=Sleeve&value=STRAP&node=shaikat11&clientID=51ac9b24e9f48404230000e5&
+/0.1/API/dynamicSearch/323232/name=Sleeve&value=STRAP&node=shaikat11&clientID=51ac9b24e9f48404230000e5&
+/0.1/API/dynamicSearch/323232/name=Sleeve&value=STRAP&node=shaikat11&clientID=51ac9b24e9f48404230000e5&
+GET
+parameters len is : 73
+{"name":"Sleeve","value":"STRAP","node":"shaikat11","clientID":"51ac9b24e9f48404230000e5","":""}
+start dynamic search. name = shaikat11
+shaikat11
+found node
+got node id 1105
+search node id 1105
+STRAP
+1
+cat is Sleeve
+start create relationship
+create relationship: [object Object]
+search in : 1105
+start query on 1105
+count is 95
+val is : SHORT
+val is : LONG
+val is : MINI
+val is : MIDI
+val is : ASYMMETRIC
+val is : MAXI
+answer [object Object]
+ret is : {"success":true,"error":"","num":0,"profile":{"nextFeature":"Length","values":[{"value":"SHORT","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=SHORT"},{"value":"LONG","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=LONG"},{"value":"MINI","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=MINI"},{"value":"MIDI","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=MIDI"},{"value":"ASYMMETRIC","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=ASYMMETRIC"},{"value":"MAXI","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=MAXI"}],"question":"What is the length of the dress?"},"nextFeature":1}
+[90mGET /0.1/API/dynamicSearch/323232/name=Sleeve&value=STRAP&node=shaikat11&clientID=51ac9b24e9f48404230000e5& [32m200 [90m2078ms - 900b[0m
+localhost
+/0.1/API/dynamicSearch/323232/name=Length&value=LONG&node=shaikat11&clientID=51ac9b24e9f48404230000e5&
+/0.1/API/dynamicSearch/323232/name=Length&value=LONG&node=shaikat11&clientID=51ac9b24e9f48404230000e5&
+/0.1/API/dynamicSearch/323232/name=Length&value=LONG&node=shaikat11&clientID=51ac9b24e9f48404230000e5&
+GET
+parameters len is : 72
+{"name":"Length","value":"LONG","node":"shaikat11","clientID":"51ac9b24e9f48404230000e5","":""}
+start dynamic search. name = shaikat11
+shaikat11
+found node
+got node id 1105
+search node id 1105
+LONG
+1
+cat is Length
+start create relationship
+create relationship: [object Object]
+search in : 1105
+start query on 1105
+count is 138
+val is : ROUND-NECK
+val is : BOAT-NECK
+val is : V-NECK
+val is : COLLAR
+val is : HEART-NECK
+val is : SHIRT-DRESS
+val is : SQUARE-NECK
+val is : BARDOT-NECK
+val is : HALTER-NECK
+val is : HIGH-NECK
+answer [object Object]
+ret is : {"success":true,"error":"","num":0,"profile":{"nextFeature":"Neck","values":[{"value":"ROUND-NECK","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=ROUND-NECK"},{"value":"BOAT-NECK","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=BOAT-NECK"},{"value":"V-NECK","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=V-NECK"},{"value":"COLLAR","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=COLLAR"},{"value":"HEART-NECK","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=HEART-NECK"},{"value":"SHIRT-DRESS","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=SHIRT-DRESS"},{"value":"SQUARE-NECK","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=SQUARE-NECK"},{"value":"BARDOT-NECK","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=BARDOT-NECK"},{"value":"HALTER-NECK","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=HALTER-NECK"},{"value":"HIGH-NECK","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=HIGH-NECK"}],"question":"what kind of neck the dress has?"},"nextFeature":1}
+[90mGET /0.1/API/dynamicSearch/323232/name=Length&value=LONG&node=shaikat11&clientID=51ac9b24e9f48404230000e5& [32m200 [90m7218ms - 1.42kb[0m
+localhost
+/0.1/API/dynamicSearch/323232/name=Neck&value=BOAT-NECK&node=shaikat11&clientID=51ac9b24e9f48404230000e5&
+/0.1/API/dynamicSearch/323232/name=Neck&value=BOAT-NECK&node=shaikat11&clientID=51ac9b24e9f48404230000e5&
+/0.1/API/dynamicSearch/323232/name=Neck&value=BOAT-NECK&node=shaikat11&clientID=51ac9b24e9f48404230000e5&
+GET
+parameters len is : 75
+{"name":"Neck","value":"BOAT-NECK","node":"shaikat11","clientID":"51ac9b24e9f48404230000e5","":""}
+start dynamic search. name = shaikat11
+shaikat11
+found node
+got node id 1105
+search node id 1105
+BOAT-NECK
+1
+cat is Neck
+start create relationship
+create relationship: [object Object]
+search in : 1105
+start query on 1105
+count is 287
+val is : OPEN BACK
+val is : CUT
+val is : CUTOUT
+val is : PLEAT
+val is : YOKE
+val is : TIE
+val is : PATCH
+val is : TEAR
+val is : FEATHER
+val is : LAYERS
+val is : BUTTON
+val is : RUFFLE
+val is : FLOWER
+val is : WRAP
+val is : VERTICAL STRIPE
+val is : BELT
+val is : POCKET
+val is : HOOD
+val is : BACK ZIP
+val is : OPENING AT THE BACK
+val is : STUD
+val is : BOW
+val is : PEPLUM
+answer [object Object]
+ret is : {"success":true,"error":"","num":0,"profile":{"nextFeature":"Misc","values":[{"value":"OPEN BACK","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=OPEN BACK"},{"value":"CUT","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=CUT"},{"value":"CUTOUT","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=CUTOUT"},{"value":"PLEAT","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=PLEAT"},{"value":"YOKE","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=YOKE"},{"value":"TIE","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=TIE"},{"value":"PATCH","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=PATCH"},{"value":"TEAR","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=TEAR"},{"value":"FEATHER","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=FEATHER"},{"value":"LAYERS","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=LAYERS"},{"value":"BUTTON","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=BUTTON"},{"value":"RUFFLE","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=RUFFLE"},{"value":"FLOWER","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=FLOWER"},{"value":"WRAP","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=WRAP"},{"value":"VERTICAL STRIPE","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=VERTICAL STRIPE"},{"value":"BELT","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=BELT"},{"value":"POCKET","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=POCKET"},{"value":"HOOD","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=HOOD"},{"value":"BACK ZIP","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=BACK ZIP"},{"value":"OPENING AT THE BACK","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=OPENING AT THE BACK"},{"value":"STUD","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=STUD"},{"value":"BOW","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=BOW"},{"value":"PEPLUM","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=PEPLUM"}],"question":"Any other properties of the dress?"},"nextFeature":1}
+[90mGET /0.1/API/dynamicSearch/323232/name=Neck&value=BOAT-NECK&node=shaikat11&clientID=51ac9b24e9f48404230000e5& [32m200 [90m2441ms - 2.89kb[0m
+localhost
+/0.1/API/dynamicSearch/323232/name=Misc&value=YOKE&node=shaikat11&clientID=51ac9b24e9f48404230000e5&
+/0.1/API/dynamicSearch/323232/name=Misc&value=YOKE&node=shaikat11&clientID=51ac9b24e9f48404230000e5&
+/0.1/API/dynamicSearch/323232/name=Misc&value=YOKE&node=shaikat11&clientID=51ac9b24e9f48404230000e5&
+GET
+parameters len is : 70
+{"name":"Misc","value":"YOKE","node":"shaikat11","clientID":"51ac9b24e9f48404230000e5","":""}
+start dynamic search. name = shaikat11
+shaikat11
+found node
+got node id 1105
+search node id 1105
+YOKE
+1
+cat is Misc
+start create relationship
+create relationship: [object Object]
+search in : 1105
+start query on 1105
+count is 290
+[ 'g.nordstromimage.com/imagegallery/store/product/large/17/_7989097.jpg',
+  'g.nordstromimage.com/imagegallery/store/product/large/0/_8155000.jpg',
+  'g.nordstromimage.com/imagegallery/store/product/large/4/_8162704.jpg',
+  'bim.shopstyle.com/pim/86/93/86938ff6ada6a07c1eca290010c35b7a_best.jpg' ]
+[ 'lp.hm.com/hmprod?set=key[source],value[/model/2013/1CA 0184880 005 39 5501 3.jpg]&set=key[rotate],value[]&set=key[width],value[]&set=key[height],value[]&set=key[x],value[]&set=key[y],value[]&set=key[type],value[STILL_LIFE_FRONT]&hmver=2&call=url[file:/product/large]',
+  'lp.hm.com/hmprod?set=key[source],value[/model/2013/1JA 0196042 009 49 3799.jpg]&set=key[rotate],value[]&set=key[width],value[]&set=key[height],value[]&set=key[x],value[]&set=key[y],value[]&set=key[type],value[STILL_LIFE_FRONT]&hmver=2&call=url[file:/product/large]',
+  'g.nordstromimage.com/imagegallery/store/product/large/15/_8222735.jpg',
+  'g.nordstromimage.com/imagegallery/store/product/large/11/_8108771.jpg',
+  'g.nordstromimage.com/imagegallery/store/product/large/17/_8162857.jpg',
+  'g.nordstromimage.com/imagegallery/store/product/large/14/_8278574.jpg',
+  'bim.shopstyle.com/pim/c3/15/c31557673ea1573bbc75ceb3bb633ff7_best.jpg',
+  'static.zara.net/photos//2013/I/0/1/p/4853/221/639/2/w/560/4853221639_2_3_1.jpg',
+  'lp.hm.com/hmprod?set=key[source],value[/model/2013/V18 0188499 001 36 2222 2.jpg]&set=key[rotate],value[]&set=key[width],value[]&set=key[height],value[]&set=key[x],value[]&set=key[y],value[]&set=key[type],value[STILL_LIFE_FRONT]&hmver=2&call=url[file:/product/large]',
+  'g.nordstromimage.com/imagegallery/store/product/large/19/_8109579.jpg',
+  'g.nordstromimage.com/imagegallery/store/product/large/1/_8152101.jpg',
+  'g.nordstromimage.com/imagegallery/store/product/large/4/_8222604.jpg',
+  'g.nordstromimage.com/imagegallery/store/product/large/2/_8139122.jpg',
+  'g.nordstromimage.com/imagegallery/store/product/large/10/_8248210.jpg',
+  'g.nordstromimage.com/imagegallery/store/product/large/18/_8208478.jpg' ]
+answer [object Object]
+ret is : {"success":true,"error":"","num":0,"profile":{"nextFeature":0,"values":[{"value":"pic","img":"http://g.nordstromimage.com/imagegallery/store/product/large/17/_7989097.jpg"},{"value":"pic","img":"http://g.nordstromimage.com/imagegallery/store/product/large/0/_8155000.jpg"},{"value":"pic","img":"http://g.nordstromimage.com/imagegallery/store/product/large/4/_8162704.jpg"},{"value":"pic","img":"http://bim.shopstyle.com/pim/86/93/86938ff6ada6a07c1eca290010c35b7a_best.jpg"},{"value":"pic","img":"http://lp.hm.com/hmprod?set=key[source],value[/model/2013/1CA 0184880 005 39 5501 3.jpg]&set=key[rotate],value[]&set=key[width],value[]&set=key[height],value[]&set=key[x],value[]&set=key[y],value[]&set=key[type],value[STILL_LIFE_FRONT]&hmver=2&call=url[file:/product/large]"},{"value":"pic","img":"http://lp.hm.com/hmprod?set=key[source],value[/model/2013/1JA 0196042 009 49 3799.jpg]&set=key[rotate],value[]&set=key[width],value[]&set=key[height],value[]&set=key[x],value[]&set=key[y],value[]&set=key[type],value[STILL_LIFE_FRONT]&hmver=2&call=url[file:/product/large]"}],"question":"Found the following DRESSES : "},"nextFeature":0}
+[90mGET /0.1/API/dynamicSearch/323232/name=Misc&value=YOKE&node=shaikat11&clientID=51ac9b24e9f48404230000e5& [32m200 [90m2353ms - 1.35kb[0m
