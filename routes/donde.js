@@ -24,6 +24,19 @@ exports.donde = function(req, res){
    });
 };
 
+var checkResults = function (results, count){
+
+	//no results yet - return false
+	if (count == 0)
+		return false;
+	//no matching item for more than 2 properties - return false
+	if (results[0].matching_properties <3)
+		return false;
+	//if there are too much items with high match - reurn false
+	if (results[0].items.length > 10)
+		return false;
+	return true;	
+};
 
 /**
  * POST /donde
@@ -50,7 +63,10 @@ exports.searchkey = function (req, res, next) {
     			return next(err);
     		//console.log(items[0].items[0]);
     		console.log(last);
-    		console.log(index)
+    		if (!last)
+    			last = checkResults(items, count);
+    		console.log(last);
+    		console.log(index);
     		console.log(Questions.QUESTIONS_VAL[Questions.QUESTIONS_ORDER[index]]);
     		res.render('donde',{
     			node : node,
