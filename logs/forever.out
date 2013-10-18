@@ -1,0 +1,122 @@
+remote
+Express server listening on port 3000
+localhost
+/0.1/API/dynamicSearch/323232/name=Sleeve&value=HALTER&node=new399
+/0.1/API/dynamicSearch/323232/name=Sleeve&value=HALTER&node=new399
+/0.1/API/dynamicSearch/323232/name=Sleeve&value=HALTER&node=new399
+GET
+parameters len is : 36
+{"name":"Sleeve","value":"HALTER","node":"new399"}
+start dynamic search. name = new399
+new399
+create new node
+Node saved to database with id: 1365
+got node id 1365
+search node id 1365
+HALTER-NECK
+1
+cat is Neck
+start create relationship
+create relationship: [object Object]
+search in : 1365
+start query on 1365
+count is 3
+answer [object Object]
+ret is : {"success":true,"error":"","num":0,"profile":{"nextFeature":"Material","values":[{"value":"JEANS","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=JEANS"},{"value":"LACE","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=LACE"},{"value":"LEATHER","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=LEATHER"}],"question":"What is the material of the dress?"},"nextFeature":1}
+[90mGET /0.1/API/dynamicSearch/323232/name=Sleeve&value=HALTER&node=new399 [32m200 [90m3204ms - 550b[0m
+localhost
+/0.1/API/dynamicSearch/323232/name=Material&value=NONE&node=new399
+/0.1/API/dynamicSearch/323232/name=Material&value=NONE&node=new399
+/0.1/API/dynamicSearch/323232/name=Material&value=NONE&node=new399
+GET
+parameters len is : 36
+{"name":"Material","value":"NONE","node":"new399"}
+start dynamic search. name = new399
+new399
+found node
+got node id 1365
+search node id 1365
+search in : 1365
+start query on 1365
+count is 3
+answer [object Object]
+ret is : {"success":true,"error":"","num":0,"profile":{"nextFeature":"Neck","values":[{"value":"CLOSED","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=CLOSED"},{"value":"HEART","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=HEART"},{"value":"V","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=V"},{"value":"BUTTONED","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=BUTTONED"},{"value":"GOLF","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=GOLF"},{"value":"SQUARE","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=SQUARE"},{"value":"COLLAR","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=COLLAR"}],"question":"what kind of neck the dress has?"},"nextFeature":1}
+[90mGET /0.1/API/dynamicSearch/323232/name=Material&value=NONE&node=new399 [32m200 [90m1192ms - 1016b[0m
+localhost
+/0.1/API/dynamicSearch/323232/name=Neck&value=NONE&node=new399
+/0.1/API/dynamicSearch/323232/name=Neck&value=NONE&node=new399
+/0.1/API/dynamicSearch/323232/name=Neck&value=NONE&node=new399
+GET
+parameters len is : 32
+{"name":"Neck","value":"NONE","node":"new399"}
+start dynamic search. name = new399
+new399
+found node
+got node id 1365
+search node id 1365
+search in : 1365
+start query on 1365
+count is 3
+answer [object Object]
+ret is : {"success":true,"error":"","num":0,"profile":{"nextFeature":"Misc","values":[{"value":"TRANSPARENT","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=TRANSPARENT"},{"value":"STUD","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=STUD"},{"value":"POCKET","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=POCKET"},{"value":"BELT","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=BELT"},{"value":"PLEAT","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=PLEAT"}],"question":"Any other properties of the dress?"},"nextFeature":1}
+[90mGET /0.1/API/dynamicSearch/323232/name=Neck&value=NONE&node=new399 [32m200 [90m1198ms - 790b[0m
+localhost
+/0.1/API/dynamicSearch/323232/name=Misc&value=TRANSPARENT&node=new399
+/0.1/API/dynamicSearch/323232/name=Misc&value=TRANSPARENT&node=new399
+/0.1/API/dynamicSearch/323232/name=Misc&value=TRANSPARENT&node=new399
+GET
+parameters len is : 39
+{"name":"Misc","value":"TRANSPARENT","node":"new399"}
+start dynamic search. name = new399
+new399
+found node
+got node id 1365
+search node id 1365
+TRANSPARENT
+1
+cat is Material
+start create relationship
+create relationship: [object Object]
+search in : 1365
+start query on 1365
+count is 21
+answer [object Object]
+ret is : {"success":true,"error":"","num":0,"profile":{"nextFeature":"Length","values":[{"value":"SHORT","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=SHORT"},{"value":"LONG","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=LONG"}],"question":"What is the length of the dress?"},"nextFeature":1}
+[90mGET /0.1/API/dynamicSearch/323232/name=Misc&value=TRANSPARENT&node=new399 [32m200 [90m7038ms - 424b[0m
+localhost
+/0.1/API/dynamicSearch/323232/name=Length&value=SHORT&node=new399
+/0.1/API/dynamicSearch/323232/name=Length&value=SHORT&node=new399
+/0.1/API/dynamicSearch/323232/name=Length&value=SHORT&node=new399
+GET
+parameters len is : 35
+{"name":"Length","value":"SHORT","node":"new399"}
+start dynamic search. name = new399
+new399
+found node
+got node id 1365
+search node id 1365
+SHORT
+1
+cat is Length
+start create relationship
+create relationship: [object Object]
+search in : 1365
+start query on 1365
+count is 365
+[ 'bim.shopstyle.com/pim/16/be/16be645ee7044273e32b40675bb2e991_best.jpg',
+  'bim.shopstyle.com/pim/a0/f5/a0f59a04ca22034d83a06c951536408a_best.jpg',
+  'bim.shopstyle.com/pim/90/ef/90ef9cb358ae353ca9ce87101affe1c1_best.jpg',
+  'lp.hm.com/hmprod?set=key[source],value[/model/2013/1LV 0184647 001 83 1985.jpg]&set=key[rotate],value[]&set=key[width],value[]&set=key[height],value[]&set=key[x],value[]&set=key[y],value[]&set=key[type],value[STILL_LIFE_FRONT]&hmver=2&call=url[file:/product/large]',
+  'g.nordstromimage.com/imagegallery/store/product/large/14/_8140054.jpg',
+  'bim.shopstyle.com/pim/86/e8/86e88b4b0fdf472c59ce74fa54ce7800_best.jpg',
+  'bim.shopstyle.com/pim/43/45/4345f5303b15ce7db54f2ae092aaac2d_best.jpg',
+  'bim.shopstyle.com/pim/fb/2e/fb2e0ed3265ba0c789b7701cfaa2414b_best.jpg',
+  'bim.shopstyle.com/pim/d4/7a/d47a3baa24cacd8158795f8298b5ae06_best.jpg',
+  'bim.shopstyle.com/pim/71/50/71509787066d4fe8fefd9d44e43a0b11_best.jpg',
+  'lp.hm.com/hmprod?set=key[source],value[/model/2013/1IV 0199309 001 79 4202 2.jpg]&set=key[rotate],value[]&set=key[width],value[]&set=key[height],value[]&set=key[x],value[]&set=key[y],value[]&set=key[type],value[STILL_LIFE_FRONT]&hmver=2&call=url[file:/product/large]',
+  'lp.hm.com/hmprod?set=key[source],value[/model/2013/1JA 0189900 001 49 3670 5.jpg]&set=key[rotate],value[]&set=key[width],value[]&set=key[height],value[]&set=key[x],value[]&set=key[y],value[]&set=key[type],value[STILL_LIFE_FRONT]&hmver=2&call=url[file:/product/large]',
+  'g.nordstromimage.com/imagegallery/store/product/large/11/_8108771.jpg',
+  'g.nordstromimage.com/imagegallery/store/product/large/7/_8162847.jpg' ]
+answer [object Object]
+ret is : {"success":true,"error":"","num":0,"profile":{"nextFeature":0,"values":[{"value":"pic","img":"http://bim.shopstyle.com/pim/16/be/16be645ee7044273e32b40675bb2e991_best.jpg"},{"value":"pic","img":"http://bim.shopstyle.com/pim/a0/f5/a0f59a04ca22034d83a06c951536408a_best.jpg"},{"value":"pic","img":"http://bim.shopstyle.com/pim/90/ef/90ef9cb358ae353ca9ce87101affe1c1_best.jpg"},{"value":"pic","img":"http://lp.hm.com/hmprod?set=key[source],value[/model/2013/1LV 0184647 001 83 1985.jpg]&set=key[rotate],value[]&set=key[width],value[]&set=key[height],value[]&set=key[x],value[]&set=key[y],value[]&set=key[type],value[STILL_LIFE_FRONT]&hmver=2&call=url[file:/product/large]"},{"value":"pic","img":"http://g.nordstromimage.com/imagegallery/store/product/large/14/_8140054.jpg"},{"value":"pic","img":"http://bim.shopstyle.com/pim/86/e8/86e88b4b0fdf472c59ce74fa54ce7800_best.jpg"},{"value":"pic","img":"http://bim.shopstyle.com/pim/43/45/4345f5303b15ce7db54f2ae092aaac2d_best.jpg"},{"value":"pic","img":"http://bim.shopstyle.com/pim/fb/2e/fb2e0ed3265ba0c789b7701cfaa2414b_best.jpg"},{"value":"pic","img":"http://bim.shopstyle.com/pim/d4/7a/d47a3baa24cacd8158795f8298b5ae06_best.jpg"},{"value":"pic","img":"http://bim.shopstyle.com/pim/71/50/71509787066d4fe8fefd9d44e43a0b11_best.jpg"},{"value":"pic","img":"http://lp.hm.com/hmprod?set=key[source],value[/model/2013/1IV 0199309 001 79 4202 2.jpg]&set=key[rotate],value[]&set=key[width],value[]&set=key[height],value[]&set=key[x],value[]&set=key[y],value[]&set=key[type],value[STILL_LIFE_FRONT]&hmver=2&call=url[file:/product/large]"}],"question":"Found the following DRESSES : "},"nextFeature":0}
+[90mGET /0.1/API/dynamicSearch/323232/name=Length&value=SHORT&node=new399 [32m200 [90m2339ms - 2.01kb[0m

@@ -435,3 +435,53 @@ exports.search_items = function (search_node, callback) {
 //where HAS(pr.category) AND (pr.category = 'Misc')
 //return  pr.name			
 
+
+//DESC : SEARCH ITEMS BY PROPERTIES
+//start n1=node:node_auto_index(name="WHITE"), n2=node:node_auto_index(name="PRINT")
+//Match (n1) -[*1..2]- (other), (n2) -[*1..2]- (other)
+//WHERE other.type = "item"
+//return count(other)
+
+var search_items = function (searchList, callback) {
+
+	
+	//first row of the query
+	var query_s ="START ";
+	
+	for (var i = 0; i < searchList.length; i++) {
+		query_s = query_s + "n" + i + "=node:node_auto_index(name='" + searchList[i] +"'), ";
+	}
+	//remove last ","
+	query_s=query_s.slice(0,-2);
+	
+	//second row
+	query_s=query_s + "\nMATCH ";
+	for (var i = 0; i < searchList.length; i++) {
+		query_s = query_s + "(n" + i + ") -[*1..2]- (other), ";
+	}
+	//remove last ","
+	query_s= query_s.slice(0,-2);
+
+	//third row	
+	query_s = query_s + "\nWHERE other.type = 'item'";
+	//fourth row
+	query_s = query_s + "\nRETURN count(other) ";
+	
+	db.query(query_s,{},function (err, res) {
+		if (err) return callback (err);
+		return callback(res);
+	}); 
+}
+
+
+
+//start n1=node:node_auto_index(name="Color"),n2=node:node_auto_index(name="Sleeve")
+//match (n1) - []-> (color) - [] - (item),(n1) - []-> (sleeve) - [] - (item)
+//where (color.type= "item_property") AND (item.type="item")
+//with collect (distinct(color.name)) as colors, 
+// collect (distinct(sleeve.name)) as sleeves,
+//   count(item) as items
+
+//return colors,sleeves, items
+//LIMIT 20
+

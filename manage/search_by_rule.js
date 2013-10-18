@@ -435,3 +435,100 @@ exports.search_items = function (search_node, callback) {
 //where HAS(pr.category) AND (pr.category = 'Misc')
 //return  pr.name			
 
+
+//DESC : SEARCH ITEMS BY PROPERTIES
+//start n1=node:node_auto_index(name="WHITE"), n2=node:node_auto_index(name="PRINT")
+//Match (n1) -[*1..2]- (other), (n2) -[*1..2]- (other)
+//WHERE other.type = "item"
+//return count(other)
+
+var search_items = function (searchList, callback) {
+
+	
+	//first row of the query
+	var query_s ="START ";
+	
+	for (var i = 0; i < searchList.length; i++) {
+		query_s = query_s + "n" + i + "=node:node_auto_index(name='" + searchList[i] +"'), ";
+	}
+	//remove last ","
+	query_s=query_s.slice(0,-2);
+	
+	//second row
+	query_s=query_s + "\nMATCH ";
+	for (var i = 0; i < searchList.length; i++) {
+		query_s = query_s + "(n" + i + ") -[*1..2]- (other), ";
+	}
+	//remove last ","
+	query_s= query_s.slice(0,-2);
+
+	//third row	
+	query_s = query_s + "\nWHERE other.type = 'item'";
+	//fourth row
+	query_s = query_s + "\nRETURN count(other) ";
+	
+	db.query(query_s,{},function (err, res) {
+		if (err) return callback (err);
+		return callback(res);
+	}); 
+}
+
+//function getCombinations(arr, n){
+//    var i,j,k,elem,l = arr.length,childperm,ret=[];
+//    if(n == 1){
+//        for(var i = 0; i < arr.length; i++){
+//            for(var j = 0; j < arr[i].length; j++){
+//                ret.push([arr[i][j]]);
+//            }
+//        }
+//        return ret;
+//    }
+//    else{
+//        for(i = 0; i < l; i++){
+//            elem = arr.shift();
+//            for(j = 0; j < elem.length; j++){
+//                childperm = getCombinations(arr.slice(), n-1);
+//                for(k = 0; k < childperm.length; k++){
+//                    ret.push([elem[j]].concat(childperm[k]));
+//                }
+//            }
+//        }
+//        return ret;
+//    }
+//    i=j=k=elem=l=childperm=ret=[]=null;
+//}
+
+//var Questions = require ('../neoParams');
+//CATEGORIES = [COLORS_MAP, PATTERNS, MATERIALS, SLEEVES,neck,MISC]//"Length" : LENGTH,
+//console.log(getCombinations(CATEGORIES, 2));
+
+//var items_count_xls = function(){
+
+//	for (i=3;i<= CATEGORIES.length; i++) {
+//		ret = getCombinations(CATEGORIES, i);
+//		var search_loop= function(j) {
+//			search_items(ret[j],function(err, res) { 
+//				if (err){
+//					search_loop(j+1);
+//					return;
+//				}
+//				
+//			});
+//		}
+//		
+//	}
+//	
+//};
+
+
+
+//start n1=node:node_auto_index(name="Color"),n2=node:node_auto_index(name="Sleeve")
+//match (n1) - []-> (color) - [] - (item),(n1) - []-> (sleeve) - [] - (item)
+//where (color.type= "item_property") AND (item.type="item")
+//with collect (distinct(color.name)) as colors, 
+// collect (distinct(sleeve.name)) as sleeves,
+//   count(item) as items
+
+//return colors,sleeves, items
+//LIMIT 20
+
