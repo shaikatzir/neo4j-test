@@ -7,6 +7,7 @@ var db = dbconn.db;
 var dbApi = require('./DBApi');
 
 var Property = require('./item_property');
+var params = require('../neoParams');
 // constants:
 
 var INDEX_NAME = 'node_auto_index';
@@ -88,7 +89,7 @@ Item.prototype.del = function (callback) {
 };
 
 Item.prototype.addProperty = function (other, callback) {
-    this._node.createRelationshipTo(other._node, PROPERTY_REL, {}, function (err, rel) {
+    this._node.createRelationshipTo(other._node,params.RELATIONS[other.data["category"]] ,{}, function (err, rel) {
         callback(err);
     });
 };
@@ -108,7 +109,7 @@ Item.prototype.getItemProperties = function (callback) {
     var query = [
         'START item=node({itemId}), other=node:INDEX_NAME(INDEX_KEY="INDEX_PROPERTY_VAL")',
         'MATCH (item) -[rel?]-> (other)',
-        'RETURN other, COUNT(rel) , item.pic as pic, item.detailed_desc as desc',  // COUNT(rel) is a hack for 1 or 0
+        'RETURN other, COUNT(rel) , item.pic as pic, item.detailed_desc as descripstion',  // COUNT(rel) is a hack for 1 or 0
         'ORDER BY other.name'
     ].join('\n')
         .replace('INDEX_NAME', INDEX_NAME)
@@ -135,7 +136,7 @@ Item.prototype.getItemProperties = function (callback) {
             }
        } 
        
-       callback(null, properties, others, results[0]['pic'], results[0]['desc']);
+       callback(null, properties, others, results[0]['pic'], results[0]['descripstion']);
     });
 };
 

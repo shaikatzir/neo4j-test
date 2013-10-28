@@ -28,18 +28,60 @@ function get_question_values(q_cat){
 
 }
 
-var checkResults = function (results, count){
-
+var checkResults = function (results, count,q_num){
+ 	
+ 	
 	//no results yet - return false
 	if (count == 0)
 		return false;
-	//no matching item for more than 2 properties - return false
-	if (results[0].matching_properties <3)
+	//if only 2 questions	- return false
+	if (q_num <= 2)
 		return false;
-	//if there are too much items with high match - reurn false
-	if (results[0].items.length > 10)
+	
+	//console.log("results : ",results);
+	console.log("q_num : " , q_num);
+	var matching_count= new Array();
+ 	for (var i=3;i<q_num+1;i++)
+ 		matching_count[i] = 0;
+//	console.log("im here");
+	//collect number of items with more than 'i' equivalent items
+	count_color_match = 0;	
+	
+	for (result in results){
+		if (results[result].matching_properties <3)
+			break;
+		matching_count[results[result].matching_properties] +=results[result].items.length;
+		
+		for (key in results[result].prs_de)
+		    //console.log(results[result].prs_de[key][0])
+			if (results[result].prs_de[key][0][1] == "Color")
+				count_color_match+=1
+		 
+	}
+	console.log("count : ",matching_count);
+	console.log("count color match : ",count_color_match);
+
+	//too much results with high match	
+	if (matching_count[q_num]> 10)
 		return false;
-	return true;	
+	// if we have high match items. and more than 4 questions return true 	
+	if ((matching_count[q_num] > 0) && (q_num > 3))
+		return true;	
+	if (count_color_match > 3)
+		return true;
+	return false;	
+
+//	for (i in matching_count)
+//		for (var j=i+1;j<matching_count.length;j++)
+//			matching_count[i] += matching_count[j]
+//			
+//	//if number of items with high match is lower than ten
+//	if 	(matching_count[3] < 10)
+//		return false;
+//	//if there are too much items with high match - reurn false
+//	if (results[0].items.length > 10)
+//		return false;
+//	return true;	
 };
 
 
@@ -84,7 +126,7 @@ exports.dynamicSearch = function (params, db, callback) {
 	    last=(index >= Questions.QUESTIONS_ORDER.length);
 	    
 	    //special case - cat can be mixed by the value
-	    if (key == "HALTER-NECK")
+	    if (key == "HALTER")
 	        //CHANGE 'cat' from "Sleeve" to "Neck"
 	    	cat = "Neck"
 	    if (key == "TRANSPARENT")
@@ -102,7 +144,7 @@ exports.dynamicSearch = function (params, db, callback) {
 	    		//console.log(items[0].items[0]);
 	    		//if its not the last question, check results to see if there is a match 
 	    		if (!last)
-    				last = checkResults(items, count);
+    				last = checkResults(items, count,index);
     			//if its last question, or we found good matching results, return items pictures.	
 	    		if (last) {
 		            ans['nextFeature'] = 0
@@ -112,11 +154,13 @@ exports.dynamicSearch = function (params, db, callback) {
 					ans['question'] = "Found the following DRESSES : "
 		            count = 0
 		            for (item in items){
-			            console.log(items[item].pics)
+			            //console.log(items[item].pics)
 		            	for (pic in items[item].pics){
 		            		ans['values'][count] = {};
 		            		ans['values'][count]["value"] = "pic"
 		            		ans['values'][count]["img"] =  "http://"+items[item].pics[pic];
+		            		ans['values'][count]["keys"] = items[item].prs_de;
+		            		ans['values'][count]["id"] = items[item].items[pic];
 		            		count += 1
 		            		if (count > 10)
 		            			break;

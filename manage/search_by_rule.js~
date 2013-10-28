@@ -131,6 +131,21 @@ search_db = function (searchList, user, callback) {
 //return items, matching_properties, items_id
 //ORDER BY matching_properties DESC
 
+// EXAMPLE : FIND MATCHING RESULTS AND SORT BY KEY VALUES
+//start se=node:node_auto_index(name="CF75822D-6E23-42E3-AAA9-30FD2DB565BA")
+//MATCH p=(se) -[:SEARCH]- > (pr) <--(item)
+//WHERE (item.type = "item") 
+//WITH p, item,
+//	collect ([pr.name, pr.category]) as prs
+//with   item, collect (distinct prs) as prs_de
+//with prs_de, COLLECT (DISTINCT item.name) as items,
+//	COLLECT (DISTINCT ID(item)) as items_id
+//with items, items_id, prs_de, length(prs_de) as matching_properties
+//where (matching_properties >2)
+//return  prs_de,  matching_properties, items, items_id
+//order by matching_properties desc
+
+
 //EXAMPLE : add a serch node connecting it to its keywords search
 //start n1=node:node_auto_index(name="Black"), n2=node:node_auto_index(name="Zip"), n3 = node:node_auto_index(name="V")
 //CREATE (ob{name: "search_try", type : "search_node"})
@@ -359,18 +374,33 @@ exports.search_create_rel = function (nodeId, cat, searchList,callback) {
 //search items connected to the search_nodes, sort them by matching criteria and return items and number of items
 exports.search_items = function (search_node, callback) {
 	
-  	var query = [
-        'START se=node({seId})',
-        'MATCH (se) -[:SEARCH]- > () <--(item)',
-        'WHERE item.type = "item"',
-        'WITH COLLECT (DISTINCT item.name) as items,',
-		'COLLECT (DISTINCT ID(item)) as items_id,',
-		'COLLECT (DISTINCT item.pic) as pics,',
-        'LENGTH ((se) -[:SEARCH]- > () <--(item)) as matching_properties',
-        'return items, matching_properties, items_id, pics',
-        'ORDER BY matching_properties DESC',
-        'LIMIT 10',
-    ].join('\n')
+//  	var query = [
+//        'START se=node({seId})',
+//        'MATCH (se) -[:SEARCH]- > () <--(item)',
+//        'WHERE item.type = "item"',
+//        'WITH COLLECT (DISTINCT item.name) as items,',
+//		'COLLECT (DISTINCT ID(item)) as items_id,',
+//		'COLLECT (DISTINCT item.pic) as pics,',
+//        'LENGTH ((se) -[:SEARCH]- > () <--(item)) as matching_properties',
+//        'return items, matching_properties, items_id, pics',
+//        'ORDER BY matching_properties DESC',
+//        'LIMIT 10',
+//    ].join('\n')
+
+	var query = [
+		'start se=node({seId})',
+		'MATCH p=(se) -[:SEARCH]- > (pr) <--(item)',
+		'WHERE (item.type = "item")', 
+		'WITH p, item, collect ([pr.name, pr.category]) as prs',
+		'WITH   item, collect (distinct prs) as prs_de',
+		'WITH prs_de, COLLECT (DISTINCT item.name) as items,',
+		'	COLLECT (DISTINCT item.pic) as pics,',
+		'	COLLECT (DISTINCT ID(item)) as items_id',
+		'with pics, items, items_id, prs_de, length(prs_de) as matching_properties',
+		'where (matching_properties >2)',
+		'return  pics, prs_de,  matching_properties, items, items_id',
+		'order by matching_properties desc',
+		].join('\n')
         
     var params = {
         seId : Number(search_node)
@@ -472,6 +502,53 @@ var search_items = function (searchList, callback) {
 		return callback(res);
 	}); 
 }
+
+//function getCombinations(arr, n){
+//    var i,j,k,elem,l = arr.length,childperm,ret=[];
+//    if(n == 1){
+//        for(var i = 0; i < arr.length; i++){
+//            for(var j = 0; j < arr[i].length; j++){
+//                ret.push([arr[i][j]]);
+//            }
+//        }
+//        return ret;
+//    }
+//    else{
+//        for(i = 0; i < l; i++){
+//            elem = arr.shift();
+//            for(j = 0; j < elem.length; j++){
+//                childperm = getCombinations(arr.slice(), n-1);
+//                for(k = 0; k < childperm.length; k++){
+//                    ret.push([elem[j]].concat(childperm[k]));
+//                }
+//            }
+//        }
+//        return ret;
+//    }
+//    i=j=k=elem=l=childperm=ret=[]=null;
+//}
+
+//var Questions = require ('../neoParams');
+//CATEGORIES = [COLORS_MAP, PATTERNS, MATERIALS, SLEEVES,neck,MISC]//"Length" : LENGTH,
+//console.log(getCombinations(CATEGORIES, 2));
+
+//var items_count_xls = function(){
+
+//	for (i=3;i<= CATEGORIES.length; i++) {
+//		ret = getCombinations(CATEGORIES, i);
+//		var search_loop= function(j) {
+//			search_items(ret[j],function(err, res) { 
+//				if (err){
+//					search_loop(j+1);
+//					return;
+//				}
+//				
+//			});
+//		}
+//		
+//	}
+//	
+//};
 
 
 

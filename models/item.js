@@ -7,6 +7,7 @@ var db = dbconn.db;
 var dbApi = require('./DBApi');
 
 var Property = require('./item_property');
+var params = require('../neoParams');
 // constants:
 
 var INDEX_NAME = 'node_auto_index';
@@ -88,7 +89,7 @@ Item.prototype.del = function (callback) {
 };
 
 Item.prototype.addProperty = function (other, callback) {
-    this._node.createRelationshipTo(other._node, PROPERTY_REL, {}, function (err, rel) {
+    this._node.createRelationshipTo(other._node,params.RELATIONS[other._node.data["category"]] ,{}, function (err, rel) {
         callback(err);
     });
 };
