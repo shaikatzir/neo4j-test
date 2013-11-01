@@ -2,6 +2,8 @@
 var dbconn = require('../routes/dbconn');
 var neo4j = dbconn.neo4j;
 var db = dbconn.db;
+var async = require('async')
+var params = require ('../neoParams');
 
 //EXAMPLE search is its cold now
 var query1 =['START se = node:node_auto_index(name="Cold"), item =node:node_auto_index(type="item")',
@@ -254,7 +256,7 @@ search_key_db = function (searchList, callback) {
 };
 
 //create a search node and returns its ID
-exports.create_search_node = function(callback) {
+var create_search_node = function(callback) {
 	var node_name = "search_" + get_time_string()
 	console.log(node_name)
 	//create the node with the curretn date and time as its name
@@ -272,18 +274,18 @@ exports.create_search_node = function(callback) {
 };	
 
 //create a search node and returns its ID
-exports.get_create_search_node = function(name, callback) {
+var get_create_search_node = function(name,type, callback) {
 	var node_name = name
 	console.log(node_name)
 	db.getIndexedNodes("node_auto_index","name", name, function(err,nodes){
 		if (err){
-			console.log("error index search" + err)
+			console.log("error index search" + err+" " + nodes+ " " + name)
         	callback(err);
         	return;
         }
         if (nodes.length > 0)	{
          	for (i in nodes)
-         		if (nodes[i].data.type=="search_node"){
+         		if (nodes[i].data.type==type){
          			console.log("found node");
 		        	callback(null,nodes[i].id);
 		        	return;
@@ -293,7 +295,7 @@ exports.get_create_search_node = function(name, callback) {
         //couldn't found node - create new one
         console.log("create new node")
         //create the node with the nod_name
-		var node = db.createNode({name: node_name, type : "search_node"})
+		var node = db.createNode({name: node_name, type : type})
 	
 		node.save(function (err) {
 		    if (err){
@@ -313,7 +315,8 @@ exports.get_create_search_node = function(name, callback) {
 
 
 //finds 'searchList' nodes and creates relationships between the search node - 'nodeId' and the searchList nodes of category 'cat' .
-exports.search_create_rel = function (nodeId, cat, searchList,callback) {
+var search_create_rel = function (nodeId, cat, searchList,callback,relName) {
+		if (typeof(relName)=="undefined") relName = "SEARCH";
 		//first get the search node	
         db.getNodeById(nodeId, function(err, node) {
 			if (err){
@@ -337,10 +340,11 @@ exports.search_create_rel = function (nodeId, cat, searchList,callback) {
 			        console.log(properties.length);
 			        console.log("cat is " +cat)
 			        for (pr in properties) {
-			            if (properties[pr].data.category == cat){
+				        console.log(properties[pr].data)
+			            if ((properties[pr].data.type == "item_property") &&((properties[pr].data.category == cat) || (cat == "ANY"))){
 			                console.log("start create relationship");
 			            	//after found the keyword node, create a relationship : (search_node)-[SEARCH]->(keyword_node)
-				            node.createRelationshipTo(properties[pr],"SEARCH",{},function(err,rel) {
+				            node.createRelationshipTo(properties[pr],relName,{},function(err,rel) {
 	   			               if (err){
 	   			                    console.log("createRelationshipTo ERROR RRR");
 				        		    callback(err);
@@ -372,7 +376,7 @@ exports.search_create_rel = function (nodeId, cat, searchList,callback) {
 };
 
 //search items connected to the search_nodes, sort them by matching criteria and return items and number of items
-exports.search_items = function (search_node, callback) {
+var search_items = function (search_node, callback) {
 	
 //  	var query = [
 //        'START se=node({seId})',
@@ -391,15 +395,16 @@ exports.search_items = function (search_node, callback) {
 		'start se=node({seId})',
 		'MATCH p=(se) -[:SEARCH]- > (pr) <--(item)',
 		'WHERE (item.type = "item")', 
-		'WITH p, item, collect ([pr.name, pr.category]) as prs',
+		'WITH p, item, collect (pr.category) as prs',
 		'WITH   item, collect (distinct prs) as prs_de',
+		'where (length(prs_de) >1)',
 		'WITH prs_de, COLLECT (DISTINCT item.name) as items,',
 		'	COLLECT (DISTINCT item.pic) as pics,',
-		'	COLLECT (DISTINCT ID(item)) as items_id',
-		'with pics, items, items_id, prs_de, length(prs_de) as matching_properties',
-		'where (matching_properties >2)',
-		'return  pics, prs_de,  matching_properties, items, items_id',
-		'order by matching_properties desc',
+		'	COLLECT (DISTINCT ID(item)) as items_id,',
+		'	(["Color"] in prs_de) as hasColor',
+		'with pics, items, items_id, prs_de, length(prs_de) as matching_properties, hasColor',
+		'return  pics, prs_de,  matching_properties, items, items_id, hasColor',
+		'order by matching_properties desc, hasColor desc',
 		].join('\n')
         
     var params = {
@@ -472,7 +477,7 @@ exports.search_items = function (search_node, callback) {
 //WHERE other.type = "item"
 //return count(other)
 
-var search_items = function (searchList, callback) {
+var search_items_old = function (searchList, callback) {
 
 	
 	//first row of the query
@@ -561,4 +566,93 @@ var search_items = function (searchList, callback) {
 
 //return colors,sleeves, items
 //LIMIT 20
+
+var methods = {};
+var getCreateNode = function (val, callback) {
+	//console.log(val)
+	if (val != "NONE"){
+			
+		//create the node with the node_name
+		get_create_search_node(val, "question_value", function(err,nodeId) {
+			if (err){
+				callback(err);
+				return;
+			}
+			callback(null, {"name" : val, "id" :nodeId});
+		});
+	}
+	else
+		callback(null,{"name" : val, "id" :0});
+}
+
+var createNodesForQuestions = function(cat, callback) {
+		val_keys = Object.keys(params.QUESTIONS_VAL[cat]);
+		//console.log (val_keys)
+		async.map(val_keys, getCreateNode, function(err, results){
+			if (err) {
+				callback(err);
+				return;
+			}
+			console.log("results are : ",results);
+			callback(null, results);
+		});
+}
+var InsertQuestionValuesToGraph = function () {
+	
+	async.map(params.QUESTIONS_ORDER, createNodesForQuestions, function(err, results){
+		if (err) {
+				console.log(err);
+				return;
+			}
+		 // results is now an array of node ids for each val
+		for (var i=0;i<results.length;i++){
+			cat = params.QUESTIONS_ORDER[i];
+			console.log("questions cat ", cat)
+			for(var j=0; j<results[i].length; j++){
+				if (results[i][j]["id"] != 0){
+				
+					search_create_rel(results[i][j]["id"], "ANY", params.QUESTIONS_VAL[cat][results[i][j]["name"]],function (err){
+							if(err)	console.log(err)
+							return;},
+						"ANT_VALUE");
+				}
+			}
+		}
+	});
+}
+
+//EXAMPLE : SHOW ALL 'question_value' ONTHOLOGY CONNECTIONS
+//start pr=node:node_auto_index(type='question_value')
+//match (pr)--(it)
+//with pr, collect (distinct it.name) as names
+//return  pr.name, names
+
+
+//EXAMPLE : CHECK  STATISTICS - HOW MANY QUESTIONS TO ITEM
+//start se=node:node_auto_index(name="976406"), pr=node:node_auto_index(type="question_value")
+//MATCH p=(se) -- ()<--(pr)-->()--(item)
+//WHERE (item.type = "item")
+//WITH  collect (distinct pr.name) as names,
+// 	item, se
+//where length(names) > 2   
+//with names,length(names) as len,
+//collect (distinct item.name) as item_names, se
+//return  item_names, names, len, length(item_names) as item_count, se.name
+//order by len desc
+
+//start cat1=node:node_auto_index(type="question_value"),cat2=node:node_auto_index(type="question_value"),se=node:node_auto_index(name="976406")
+//MATCH (item) --> ({"type":"item_property"})<-[:ANT_VALUE]-(cat1)-[:ANT_VALUE]->({"type":"item_property"})<--(se),
+//      (item)--> ({"type":"item_property"})<-[:ANT_VALUE]-(cat2)-[:ANT_VALUE]->({"type":"item_property"})<--(se)
+//where (item.type="item")
+//with cat1, cat2 , collect(distinct item.name) as items    
+//return cat1.name,cat2.name, items, length(items)...
+//InsertQuestionValuesToGraph();
+
+
+module.exports = {
+  create_search_node: create_search_node,
+  get_create_search_node: get_create_search_node,
+  search_create_rel : search_create_rel,
+  search_items : search_items
+}
 

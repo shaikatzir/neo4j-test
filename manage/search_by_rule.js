@@ -395,15 +395,16 @@ var search_items = function (search_node, callback) {
 		'start se=node({seId})',
 		'MATCH p=(se) -[:SEARCH]- > (pr) <--(item)',
 		'WHERE (item.type = "item")', 
-		'WITH p, item, collect ([pr.name, pr.category]) as prs',
+		'WITH p, item, collect (pr.category) as prs',
 		'WITH   item, collect (distinct prs) as prs_de',
+		'where (length(prs_de) >1)',
 		'WITH prs_de, COLLECT (DISTINCT item.name) as items,',
 		'	COLLECT (DISTINCT item.pic) as pics,',
-		'	COLLECT (DISTINCT ID(item)) as items_id',
-		'with pics, items, items_id, prs_de, length(prs_de) as matching_properties',
-		'where (matching_properties >1)',
-		'return  pics, prs_de,  matching_properties, items, items_id',
-		'order by matching_properties desc',
+		'	COLLECT (DISTINCT ID(item)) as items_id,',
+		'	(["Color"] in prs_de) as hasColor',
+		'with pics, items, items_id, prs_de, length(prs_de) as matching_properties, hasColor',
+		'return  pics, prs_de,  matching_properties, items, items_id, hasColor',
+		'order by hasColor DESC, matching_properties desc',
 		].join('\n')
         
     var params = {
