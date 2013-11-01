@@ -1,7 +1,7 @@
 
 //Graph DB colors
 //COLORS = [ "SILVER","PINK","PURPLE","WHITE","BLACK","ORANGE","GREEN","BLUE","GREY","BROWN","LEOPARD","YELLOW","GOLD","ZEBRA","BEIGE","RED"]
-COLORS = ["BLUE","GREEN","ORANGE", "PINK","YELLOW", "BLACK","WHITE"]
+COLORS = ["BLUE","GREEN","ORANGE", "PINK","YELLOW", "BLACK","WHITE","RED","PURPLE","GREY","BROWN","BEIGE"]
 COLORS_MAP = {}
 for (cl in COLORS)
    COLORS_MAP[COLORS[cl]] = [COLORS[cl]];
@@ -9,7 +9,7 @@ COLORS_MAP["NONE"] =[]
 // ['Black','White','Grey','Blue','Red','Beige','Pink','Brown','Yellow','Orange','Green','Purple','Leopard', 'Zebra','Gold','Silver']
 
 //Graph DB patterns
-PATTERNS_MAP = {"GEOMETRIC" : ["STRIPE","PRINT"],"LEOPARD" : ["LEOPARD","PRINT","ANIAML"], "FLORAL" : ["FLORAL","PRINT"], "TWO COLOR": ["TWO COLOR"] , "STRIPE": ["STRIPE"], "DOT" : ["DOT"] , "SCATCH" : ["STRIPE", "PRINT"] , "PLAID" : ["PLAID"] ,
+PATTERNS_MAP = {"GEOMETRIC" : ["STRIPE","PRINT"],"LEOPARD" : ["LEOPARD","PRINT","ANIMAL"], "FLORAL" : ["FLORAL","PRINT"], "TWO COLOR": ["TWO COLOR"] , "STRIPE": ["STRIPE"], "DOT" : ["DOT"] , "SCATCH" : ["STRIPE", "PRINT"] , "PLAID" : ["PLAID"] ,
 // "PLAIN" : [],
   "NONE" : []}
 //["FLORAL", "STRIPE","ANIMAL","PRINT","DOT","SNAKE","LEOPARD","ZEBRA","PLAID","TWO COLOR"]}
