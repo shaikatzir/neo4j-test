@@ -54,7 +54,7 @@ var checkResults = function (results, count,q_num){
 		
 		for (key in results[result].prs_de)
 		    //console.log(results[result].prs_de[key][0])
-			if (results[result].prs_de[key][0][1] == "Color")
+			if (results[result].prs_de[key][0] == "Color")
 				count_color_match+=1
 		 
 	}

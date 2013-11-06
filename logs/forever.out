@@ -1,126 +1,29 @@
 remote
 Express server listening on port 3000
-127.0.0.1
-/0.1/API/dynamicSearch/323232/name=Length&value=SHORT&node=9943478
-/0.1/API/dynamicSearch/323232/name=Length&value=SHORT&node=9943478
-/0.1/API/dynamicSearch/323232/name=Length&value=SHORT&node=9943478
+localhost
+/0.1/API/dynamicSearch/323232/name=Color&value=RED&node=9d43478dd
+/0.1/API/dynamicSearch/323232/name=Color&value=RED&node=9d43478dd
+/0.1/API/dynamicSearch/323232/name=Color&value=RED&node=9d43478dd
 GET
-parameters len is : 36
-{"name":"Length","value":"SHORT","node":"9943478"}
-start dynamic search. name = 9943478
-9943478
+parameters len is : 35
+{"name":"Color","value":"RED","node":"9d43478dd"}
+start dynamic search. name = 9d43478dd
+9d43478dd
 found node
-got node id 5652
-search node id 5652
-SHORT
-2
-cat is Length
-{ applicable: 'yes',
-  category: 'Length',
-  type: 'item_property',
-  name: 'SHORT' }
-start create relationship
-{ type: 'question_value', name: 'SHORT' }
-create relationship: [object Object]
-MINI
+got node id 5713
+search node id 5713
+RED
 1
-cat is Length
-{ category: 'Length', type: 'item_property', name: 'MINI' }
-start create relationship
-create relationship: [object Object]
-search in : 5652
-start query on 5652
-count is 176
-answer [object Object]
-ret is : {"success":true,"error":"","num":0,"profile":{"nextFeature":0,"values":[{"value":"pic","img":"http://lp.hm.com/hmprod?set=key[source],value[/model/2013/1AV 0193650 002 79 4213 0.jpg]&set=key[rotate],value[]&set=key[width],value[]&set=key[height],value[]&set=key[x],value[]&set=key[y],value[]&set=key[type],value[STILL_LIFE_FRONT]&hmver=2&call=url[file:/product/large]"},{"value":"pic","img":"http://g.nordstromimage.com/imagegallery/store/product/large/18/_8349658.jpg"},{"value":"pic","img":"http://bim.shopstyle.com/pim/76/e6/76e6a533da85bfa0babc8cbaabd2d730_best.jpg"},{"value":"pic","img":"http://bim.shopstyle.com/pim/05/ab/05abd04923732d24f825460dad2671b8_best.jpg"},{"value":"pic","img":"http://g.nordstromimage.com/imagegallery/store/product/large/4/_8162704.jpg"},{"value":"pic","img":"http://bim.shopstyle.com/pim/27/d9/27d9b1590b5ab906401a73fcc932ece9_best.jpg"},{"value":"pic","img":"http://g.nordstromimage.com/imagegallery/store/product/large/12/_8333212.jpg"},{"value":"pic","img":"http://g.nordstromimage.com/imagegallery/store/product/large/10/_8222630.jpg"},{"value":"pic","img":"http://g.nordstromimage.com/imagegallery/store/product/large/17/_8209857.jpg"},{"value":"pic","img":"http://g.nordstromimage.com/imagegallery/store/product/large/3/_8278843.jpg"}],"results":[{"id":"17003"},{"id":"976406"},{"id":"436235942"},{"id":"434334376"},{"id":"949485"},{"id":"436235170"},{"id":"973406"},{"id":"953141"},{"id":"943074_1"},{"id":"967681"}],"question":"Found the following DRESSES : "},"nextFeature":0}
-[90mGET /0.1/API/dynamicSearch/323232/name=Length&value=SHORT&node=9943478 [32m200 [90m5211ms - 2.11kb[0m
-127.0.0.1
-/0.1/API/dynamicSearch/323232/node=9d43478
-/0.1/API/dynamicSearch/323232/node=9d43478
-/0.1/API/dynamicSearch/323232/node=9d43478
-GET
-parameters len is : 12
-{"node":"9d43478"}
-start dynamic search. name = 9d43478
-9d43478
-create new node
-Node saved to database with id: 5653
-got node id 5653
-question first time [object Object]
-ret is : {"success":true,"error":"","num":0,"profile":{"nextFeature":"Color","values":[{"value":"BLUE","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=BLUE"},{"value":"GREEN","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=GREEN"},{"value":"ORANGE","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=ORANGE"},{"value":"PINK","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=PINK"},{"value":"YELLOW","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=YELLOW"},{"value":"BLACK","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=BLACK"},{"value":"WHITE","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=WHITE"},{"value":"RED","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=RED"},{"value":"PURPLE","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=PURPLE"},{"value":"GREY","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=GREY"},{"value":"BROWN","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=BROWN"},{"value":"BEIGE","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=BEIGE"}],"question":"What color is the dress?"},"nextFeature":1}
-[90mGET /0.1/API/dynamicSearch/323232/node=9d43478 [32m200 [90m885ms - 1.56kb[0m
-127.0.0.1
-/0.1/API/dynamicSearch/323232/name=Color&value=BLUE&node=9d43478
-/0.1/API/dynamicSearch/323232/name=Color&value=BLUE&node=9d43478
-/0.1/API/dynamicSearch/323232/name=Color&value=BLUE&node=9d43478
-GET
-parameters len is : 34
-{"name":"Color","value":"BLUE","node":"9d43478"}
-start dynamic search. name = 9d43478
-9d43478
-found node
-got node id 5653
-search node id 5653
-BLUE
-2
 cat is Color
 { applicable: 'yes',
   category: 'Color',
   type: 'item_property',
-  name: 'BLUE' }
+  name: 'RED' }
 start create relationship
-{ type: 'question_value', name: 'BLUE' }
 create relationship: [object Object]
-search in : 5653
-start query on 5653
-count is 0
+search in : 5713
+start query on 5713
+count is 10
 answer [object Object]
-ret is : {"success":true,"error":"","num":0,"profile":{"nextFeature":"Pattern","values":[{"value":"GEOMETRIC","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=GEOMETRIC"},{"value":"LEOPARD","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=LEOPARD"},{"value":"FLORAL","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=FLORAL"},{"value":"TWO COLOR","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=TWO COLOR"},{"value":"STRIPE","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=STRIPE"},{"value":"DOT","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=DOT"},{"value":"SCATCH","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=SCATCH"},{"value":"PLAID","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=PLAID"}],"question":"What is the pattern of the dress?","results":[]},"nextFeature":1}
-[90mGET /0.1/API/dynamicSearch/323232/name=Color&value=BLUE&node=9d43478 [32m200 [90m3737ms - 1.15kb[0m
-127.0.0.1
-/0.1/API/dynamicSearch/323232/name=Pattern&value=LEOPARD&node=9d43478
-/0.1/API/dynamicSearch/323232/name=Pattern&value=LEOPARD&node=9d43478
-/0.1/API/dynamicSearch/323232/name=Pattern&value=LEOPARD&node=9d43478
-GET
-parameters len is : 39
-{"name":"Pattern","value":"LEOPARD","node":"9d43478"}
-start dynamic search. name = 9d43478
-9d43478
-found node
-got node id 5653
-search node id 5653
-LEOPARD
-3
-cat is Pattern
-{ applicable: 'yes',
-  category: 'Color',
-  type: 'item_property',
-  name: 'LEOPARD' }
-{ applicable: 'yes',
-  category: 'Pattern',
-  type: 'item_property',
-  name: 'LEOPARD' }
-start create relationship
-{ type: 'question_value', name: 'LEOPARD' }
-create relationship: [object Object]
-PRINT
-1
-cat is Pattern
-{ applicable: 'yes',
-  category: 'Pattern',
-  type: 'item_property',
-  name: 'PRINT' }
-start create relationship
-create relationship: [object Object]
-ANIMAL
-1
-cat is Pattern
-{ category: 'Pattern', type: 'item_property', name: 'ANIMAL' }
-start create relationship
-create relationship: [object Object]
-search in : 5653
-start query on 5653
-count is 9
-answer [object Object]
-ret is : {"success":true,"error":"","num":0,"profile":{"nextFeature":"Neck","values":[{"value":"CLOSED","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=CLOSED"},{"value":"V","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=V"},{"value":"GOLF","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=GOLF"},{"value":"COLLAR","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=COLLAR"}],"question":"what kind of neck the dress has?","results":[{"id":"436233956"},{"id":"697148"},{"id":"436235555"},{"id":"945501"},{"id":"436234481"},{"id":"693709"},{"id":"347313257"},{"id":"435962775"},{"id":"18907"}]},"nextFeature":1}
-[90mGET /0.1/API/dynamicSearch/323232/name=Pattern&value=LEOPARD&node=9d43478 [32m200 [90m5557ms - 1.03kb[0m
+ret is : {"success":true,"error":"","num":0,"profile":{"nextFeature":"Pattern","values":[{"value":"GEOMETRIC","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=GEOMETRIC"},{"value":"LEOPARD","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=LEOPARD"},{"value":"FLORAL","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=FLORAL"},{"value":"TWO COLOR","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=TWO COLOR"},{"value":"STRIPE","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=STRIPE"},{"value":"DOT","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=DOT"},{"value":"SCATCH","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=SCATCH"},{"value":"PLAID","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=PLAID"},{"value":"PLAIN","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=PLAIN"}],"question":"What is the pattern of the dress?","results":[{"id":"435962775","index":0},{"id":"436235555","index":0},{"id":"945501","index":0},{"id":"18907","index":0},{"id":"693709","index":0},{"id":"347313257","index":0},{"id":"436233956","index":0},{"id":"436234113","index":0},{"id":"436234481","index":0},{"id":"436234863","index":0}]},"nextFeature":1}
+[90mGET /0.1/API/dynamicSearch/323232/name=Color&value=RED&node=9d43478dd [32m200 [90m3311ms - 1.87kb[0m

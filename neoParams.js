@@ -10,7 +10,7 @@ COLORS_MAP["NONE"] =[]
 
 //Graph DB patterns
 PATTERNS_MAP = {"GEOMETRIC" : ["STRIPE","PRINT"],"LEOPARD" : ["LEOPARD","PRINT","ANIMAL"], "FLORAL" : ["FLORAL","PRINT"], "TWO COLOR": ["TWO COLOR"] , "STRIPE": ["STRIPE"], "DOT" : ["DOT"] , "SCATCH" : ["STRIPE", "PRINT"] , "PLAID" : ["PLAID"] ,
-// "PLAIN" : [],
+ "PLAIN" : [],
   "NONE" : []}
 //["FLORAL", "STRIPE","ANIMAL","PRINT","DOT","SNAKE","LEOPARD","ZEBRA","PLAID","TWO COLOR"]}
 

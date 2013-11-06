@@ -378,18 +378,7 @@ var search_create_rel = function (nodeId, cat, searchList,callback,relName) {
 //search items connected to the search_nodes, sort them by matching criteria and return items and number of items
 var search_items = function (search_node, callback) {
 	
-//  	var query = [
-//        'START se=node({seId})',
-//        'MATCH (se) -[:SEARCH]- > () <--(item)',
-//        'WHERE item.type = "item"',
-//        'WITH COLLECT (DISTINCT item.name) as items,',
-//		'COLLECT (DISTINCT ID(item)) as items_id,',
-//		'COLLECT (DISTINCT item.pic) as pics,',
-//        'LENGTH ((se) -[:SEARCH]- > () <--(item)) as matching_properties',
-//        'return items, matching_properties, items_id, pics',
-//        'ORDER BY matching_properties DESC',
-//        'LIMIT 10',
-//    ].join('\n')
+
 
 	var query = [
 		'start se=node({seId})',
@@ -401,9 +390,10 @@ var search_items = function (search_node, callback) {
 		'WITH prs_de, COLLECT (DISTINCT item.name) as items,',
 		'	COLLECT (DISTINCT item.pic) as pics,',
 		'	COLLECT (DISTINCT ID(item)) as items_id,',
-		'	(["Color"] in prs_de) as hasColor',
-		'with pics, items, items_id, prs_de, length(prs_de) as matching_properties, hasColor',
-		'return  pics, prs_de,  matching_properties, items, items_id, hasColor',
+		'	(["Color"] in prs_de) as hasColor,',
+        '   COLLECT(COALESCE(item.index?, 0)) as item_index',
+		'with pics, items, items_id, prs_de, length(prs_de) as matching_properties, hasColor,item_index',
+        'return  pics, prs_de,  matching_properties, items, items_id, hasColor, item_index',
 		'order by hasColor DESC, matching_properties desc',
 		].join('\n')
         
