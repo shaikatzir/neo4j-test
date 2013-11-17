@@ -338,29 +338,36 @@ var search_create_rel = function (nodeId, cat, searchList,callback,relName) {
 	        			return;
 			        };
 			        console.log(properties.length);
-			        console.log("cat is " +cat)
+			        console.log("cat is " +cat);
+			        foundPrs = 0;
 			        for (pr in properties) {
 				        console.log(properties[pr].data)
 			            if ((properties[pr].data.type == "item_property") &&((properties[pr].data.category == cat) || (cat == "ANY"))){
 			                console.log("start create relationship");
+			                foundPrs++;
+			                if (foundPrs>1)
+			                	console.log("ERROR : shouldn't be in create relationships more than once per search item.");
+			                else {	
 			            	//after found the keyword node, create a relationship : (search_node)-[SEARCH]->(keyword_node)
-				            node.createRelationshipTo(properties[pr],relName,{},function(err,rel) {
-	   			               if (err){
-	   			                    console.log("createRelationshipTo ERROR RRR");
-				        		    callback(err);
-				        		    return;
-						        };
-						        console.log("create relationship: "+rel);
-						        createRelationship(i+1);
-						        return;
-			                });
+				            	node.createRelationshipTo(properties[pr],relName,{},function(err,rel) {
+	   			            	   if (err){
+	   			           	         console.log("createRelationshipTo ERROR RRR");
+				        			    callback(err);
+				        			    return;
+						   	     };
+						   	     console.log("create relationship: "+rel);
+						   	     createRelationship(i+1);
+						   	     return;
+			               	 });
+			                }
+			                
+			                
 			            }      	   
 			        }          	   
 			                   	   
              	   
 					    
-					//  TODO : can get stuck and never return if found relationships but couldnt find the 'cat'
-			        if (properties.length == 0){
+			        if ((properties.length == 0) || (foundPrs==0)){
 			        	console.log("couldn't find: "+searchList[i]);
 			        	createRelationship(i+1);
 			        }

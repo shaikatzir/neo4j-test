@@ -136,7 +136,7 @@ exports.dynamicSearch = function (params, db, callback) {
 	    Search.search_create_rel(node, cat, arr,function(err) {
 	    	if (err)
 	    		return callback(err);
-	    	console.log("search in : "+node)
+	    	console.log("search in : "+node);
 	    	//search matching items to the search node
 	    	Search.search_items(node, function(err,items,count) {
 	    		if (err)
@@ -164,6 +164,7 @@ exports.dynamicSearch = function (params, db, callback) {
 		            		//ans['values'][count]["keys"] = items[item].prs_de;
 		            		ans['results'][count] = {}
 		            		ans['results'][count]["id"] = items[item].items[pic];
+		            		ans['results'][count]["index"] = items[item].item_index[pic];
 		            		count += 1
 		            		if (count >= 10)
 		            			break;
@@ -184,6 +185,7 @@ exports.dynamicSearch = function (params, db, callback) {
 			           	for (pic in items[item].pics){
 			           		ans['results'][count] = {}
 		            		ans['results'][count]["id"] = items[item].items[pic];
+		            		ans['results'][count]["index"] = items[item].item_index[pic];
 		            		count+=1
 		            		if (count >= 10)
 		            			break;
