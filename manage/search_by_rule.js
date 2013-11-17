@@ -386,7 +386,7 @@ var search_items = function (search_node, callback) {
 		'WHERE (item.type = "item")', 
 		'WITH p, item, collect (pr.category) as prs',
 		'WITH   item, collect (distinct prs) as prs_de',
-		'where (length(prs_de) >1)',
+		'where (length(prs_de) >0)',
 		'WITH prs_de, COLLECT (DISTINCT item.name) as items,',
 		'	COLLECT (DISTINCT item.pic) as pics,',
 		'	COLLECT (DISTINCT ID(item)) as items_id,',
