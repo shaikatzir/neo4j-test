@@ -60,7 +60,7 @@ var search_par = ["Black", "Sleeveless","Zip", "V","Short"]
 //Create unique (user) - [r:SEARCH] -> (ob{name: "se_1112_shaika", type : "search_node"}) - [r1 :SEARCH] -> (item) 
 //return user.name , r, r1, ob
 
-search_db = function (searchList, user, callback) {
+var search_db = function (searchList, user, callback) {
 
 	
 	//first row of the query
@@ -75,7 +75,7 @@ search_db = function (searchList, user, callback) {
 	//second row
 	query_s=query_s + "\nMATCH ";
 	for (var i = 0; i < searchList.length; i++) {
-		query_s = query_s + "(n" + i + ") -[*1..2]- (other), ";
+		query_s = query_s + "(n" + i + ") -- (other), ";
 	}
 	//remove last ","
 	query_s= query_s.slice(0,-2);
@@ -84,12 +84,12 @@ search_db = function (searchList, user, callback) {
 	query_s = query_s + "\nWHERE other.type = 'item'";
 	//fourth row
 	query_s = query_s + "\nRETURN other, other.name ";
-	//fifth row
-	query_s = query_s + "\nORDER BY other.searches DESC";
+	
 	
 	db.query(query_s,{},function (err, res) {
 		if (err) return callback (err);
 		if (res.length != 1) return callback (null, res);
+		if (user == null) return callback (null, res);
 		var create_search_node =  [
         	'start item=node:node_auto_index(name={itemName}), user=node:node_auto_index(name={userName})',
 			'Create unique (user) - [r:SEARCH] -> (ob{name: {nodeName}, type : "search_node"}) - [r1 :SEARCH] -> (item)',
@@ -650,6 +650,7 @@ module.exports = {
   create_search_node: create_search_node,
   get_create_search_node: get_create_search_node,
   search_create_rel : search_create_rel,
-  search_items : search_items
+  search_items : search_items,
+  search_db : search_db
 }
 

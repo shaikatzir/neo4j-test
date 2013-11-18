@@ -4,21 +4,50 @@
 var item = require('../models/item');
 var Property = require('../models/item_property');
 
+
 /**
  * GET /items
  */
 exports.list = function (req, res, next) {
     item.getAll(function (err, items) {
         if (err) return next(err);
-        res.render('items', {
-            items: items
+        item.getAllProperties(function(err, properties) {
+        	if (err) return next(err);
+        	defaults = {}
+        	for (var i=0; i< properties.length; i++){
+        		defaults[properties[i]["cat"]] = '';
+        	}
+        	console.log(defaults);
+        	res.render('items', {
+            	items: items,
+            	properties : properties,
+            	defaults : defaults
+        	});        
         });
+        
     });
 };
 
 /**
  * POST /items
  */
+exports.filter = function (req, res, next) {
+    console.log(req.body);
+
+    item.getAllFiltered(req.body,function (err, items) {
+        if (err) return next(err);
+        item.getAllProperties(function(err, properties) {
+        	if (err) return next(err);
+        	res.render('items', {
+       	    	items: items,
+       	    	properties : properties,
+       	    	defaults : req.body
+       	    });	
+        });        
+        
+        
+    });
+};
 exports.create = function (req, res, next) {
     item.create({
         name: req.body['name']

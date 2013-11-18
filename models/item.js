@@ -8,6 +8,7 @@ var dbApi = require('./DBApi');
 
 var Property = require('./item_property');
 var params = require('../neoParams');
+var queries = require('../manage/search_by_rule');
 // constants:
 
 var INDEX_NAME = 'node_auto_index';
@@ -156,3 +157,27 @@ Item.create = function (data, callback) {
         data.type = 'item';
 	dbApi.create('./item',data,callback);
 };
+
+
+Item.getAllProperties = function (callback) {
+   Property.getAllProperties(callback);
+};
+
+Item.getAllFiltered = function (properties, callback) {
+	pros = [];
+	for (val in properties) 
+		if (properties[val] != '')
+			pros.push(properties[val]);
+	console.log(pros);
+	queries.search_db(pros,null,function(err,res){
+		if (err) return callback(err);
+		items = [];
+		console.log(res.length)
+		for (var i=0; i< res.length;i++){
+			items.push(new Item(res[i]['other']));
+		}
+		callback(null,items);
+	});
+
+};
+

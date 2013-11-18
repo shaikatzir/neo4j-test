@@ -2,8 +2,19 @@ extends layout
 
 block content
     h1 Items
-	p
+    p
         a(href='./') Back to homepage
+        
+    form(action='', method='POST')
+        for cat in properties
+            p #{cat.cat}: 
+                
+                select(name='#{cat.cat}')
+                    option(value='')
+                    for pr in cat.properties
+                        option(value='#{pr}', selected=pr==defaults[cat.cat]) #{pr}
+        input(type='submit', value='filter')
+                
     if items.length
         p Here are the current items:
         ul.items
@@ -13,7 +24,3 @@ block content
     else
         p There are no items currently.
 
-    form(action='', method='POST')
-        p Create a new item:
-        input(type='text', name='name', placeholder='Name', required)
-        input(type='submit', value='Create')

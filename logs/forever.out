@@ -1,29 +1,10 @@
 remote
 Express server listening on port 3000
-localhost
-/0.1/API/dynamicSearch/323232/name=Color&value=RED&node=9d43478dd
-/0.1/API/dynamicSearch/323232/name=Color&value=RED&node=9d43478dd
-/0.1/API/dynamicSearch/323232/name=Color&value=RED&node=9d43478dd
-GET
-parameters len is : 35
-{"name":"Color","value":"RED","node":"9d43478dd"}
-start dynamic search. name = 9d43478dd
-9d43478dd
-found node
-got node id 5713
-search node id 5713
-RED
-1
-cat is Color
-{ applicable: 'yes',
-  category: 'Color',
-  type: 'item_property',
-  name: 'RED' }
-start create relationship
-create relationship: [object Object]
-search in : 5713
-start query on 5713
-count is 10
-answer [object Object]
-ret is : {"success":true,"error":"","num":0,"profile":{"nextFeature":"Pattern","values":[{"value":"GEOMETRIC","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=GEOMETRIC"},{"value":"LEOPARD","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=LEOPARD"},{"value":"FLORAL","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=FLORAL"},{"value":"TWO COLOR","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=TWO COLOR"},{"value":"STRIPE","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=STRIPE"},{"value":"DOT","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=DOT"},{"value":"SCATCH","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=SCATCH"},{"value":"PLAID","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=PLAID"},{"value":"PLAIN","img":"http://donde-app.com:2222/0.1/API/getImg/323232/img=PLAIN"}],"question":"What is the pattern of the dress?","results":[{"id":"435962775","index":0},{"id":"436235555","index":0},{"id":"945501","index":0},{"id":"18907","index":0},{"id":"693709","index":0},{"id":"347313257","index":0},{"id":"436233956","index":0},{"id":"436234113","index":0},{"id":"436234481","index":0},{"id":"436234863","index":0}]},"nextFeature":1}
-[90mGET /0.1/API/dynamicSearch/323232/name=Color&value=RED&node=9d43478dd [32m200 [90m3311ms - 1.87kb[0m
+{ Neck: '',
+  Sleeve: '',
+  Length: '',
+  Material: '',
+  Misc: '',
+  Color: '',
+  Pattern: '' }
+[90mGET /items [32m200 [90m5300ms - 41.97kb[0m

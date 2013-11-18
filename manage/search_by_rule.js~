@@ -60,7 +60,7 @@ var search_par = ["Black", "Sleeveless","Zip", "V","Short"]
 //Create unique (user) - [r:SEARCH] -> (ob{name: "se_1112_shaika", type : "search_node"}) - [r1 :SEARCH] -> (item) 
 //return user.name , r, r1, ob
 
-search_db = function (searchList, user, callback) {
+var search_db = function (searchList, user, callback) {
 
 	
 	//first row of the query
@@ -84,12 +84,12 @@ search_db = function (searchList, user, callback) {
 	query_s = query_s + "\nWHERE other.type = 'item'";
 	//fourth row
 	query_s = query_s + "\nRETURN other, other.name ";
-	//fifth row
-	query_s = query_s + "\nORDER BY other.searches DESC";
+	
 	
 	db.query(query_s,{},function (err, res) {
 		if (err) return callback (err);
 		if (res.length != 1) return callback (null, res);
+		if (user == null) return callback (null, res);
 		var create_search_node =  [
         	'start item=node:node_auto_index(name={itemName}), user=node:node_auto_index(name={userName})',
 			'Create unique (user) - [r:SEARCH] -> (ob{name: {nodeName}, type : "search_node"}) - [r1 :SEARCH] -> (item)',
@@ -338,29 +338,36 @@ var search_create_rel = function (nodeId, cat, searchList,callback,relName) {
 	        			return;
 			        };
 			        console.log(properties.length);
-			        console.log("cat is " +cat)
+			        console.log("cat is " +cat);
+			        foundPrs = 0;
 			        for (pr in properties) {
 				        console.log(properties[pr].data)
 			            if ((properties[pr].data.type == "item_property") &&((properties[pr].data.category == cat) || (cat == "ANY"))){
 			                console.log("start create relationship");
+			                foundPrs++;
+			                if (foundPrs>1)
+			                	console.log("ERROR : shouldn't be in create relationships more than once per search item.");
+			                else {	
 			            	//after found the keyword node, create a relationship : (search_node)-[SEARCH]->(keyword_node)
-				            node.createRelationshipTo(properties[pr],relName,{},function(err,rel) {
-	   			               if (err){
-	   			                    console.log("createRelationshipTo ERROR RRR");
-				        		    callback(err);
-				        		    return;
-						        };
-						        console.log("create relationship: "+rel);
-						        createRelationship(i+1);
-						        return;
-			                });
+				            	node.createRelationshipTo(properties[pr],relName,{},function(err,rel) {
+	   			            	   if (err){
+	   			           	         console.log("createRelationshipTo ERROR RRR");
+				        			    callback(err);
+				        			    return;
+						   	     };
+						   	     console.log("create relationship: "+rel);
+						   	     createRelationship(i+1);
+						   	     return;
+			               	 });
+			                }
+			                
+			                
 			            }      	   
 			        }          	   
 			                   	   
              	   
 					    
-					//  TODO : can get stuck and never return if found relationships but couldnt find the 'cat'
-			        if (properties.length == 0){
+			        if ((properties.length == 0) || (foundPrs==0)){
 			        	console.log("couldn't find: "+searchList[i]);
 			        	createRelationship(i+1);
 			        }
@@ -643,6 +650,7 @@ module.exports = {
   create_search_node: create_search_node,
   get_create_search_node: get_create_search_node,
   search_create_rel : search_create_rel,
-  search_items : search_items
+  search_items : search_items,
+  search_db : search_db
 }
 

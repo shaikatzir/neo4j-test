@@ -1,0 +1,12 @@
+version 1.0 :
+
+    features:
+    	-web service:
+    		- search for items, users, properties
+    		- filter items
+    		- add remove properties
+    		- search using donde search
+    		
+    	-supply "Donde Dynamic Search" for the app.
+    	
+    	

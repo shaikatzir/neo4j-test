@@ -4,21 +4,51 @@
 var item = require('../models/item');
 var Property = require('../models/item_property');
 
+var defaults ={ "Neck": 'HALTER-NECK',
+  "Sleeve": '',
+  "Length": '',
+  "Material": '',
+  "Misc": 'ON SHOULDERS',
+  "Color": 'BLACK',
+  "Pattern": '' };
 /**
  * GET /items
  */
 exports.list = function (req, res, next) {
     item.getAll(function (err, items) {
         if (err) return next(err);
-        res.render('items', {
-            items: items
+        item.getAllProperties(function(err, properties) {
+        	if (err) return next(err);
+        	res.render('items', {
+            	items: items,
+            	properties : properties,
+            	defaults : defaults
+        	});        
         });
+        
     });
 };
 
 /**
  * POST /items
  */
+exports.filter = function (req, res, next) {
+    console.log(req.body);
+
+    item.getAllFiltered(req.body,function (err, items) {
+        if (err) return next(err);
+        item.getAllProperties(function(err, properties) {
+        	if (err) return next(err);
+        	res.render('items', {
+       	    	items: items,
+       	    	properties : properties,
+       	    	defaults : req.body
+       	    });	
+        });        
+        
+        
+    });
+};
 exports.create = function (req, res, next) {
     item.create({
         name: req.body['name']
@@ -34,11 +64,12 @@ exports.create = function (req, res, next) {
 exports.show = function (req, res, next) {
     item.get(req.params.id, function (err, item) {
         if (err) return next(err);
-	item.getItemProperties(function (err, properties, other_prs, pic) {
+	item.getItemProperties(function (err, properties, other_prs, pic, desc) {
             if (err) return next(err);
             console.log(pic)
             res.render('item', {
                 item: item,
+                desc : desc,
                 pic : pic,
                 properties: properties,
                 other_prs : other_prs

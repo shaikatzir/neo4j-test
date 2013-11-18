@@ -49,7 +49,7 @@ app.post('/users/:id/rmitem', routes.users.rmitem);
 
 //items
 app.get('/items', routes.items.list);
-app.post('/items', routes.items.create);
+app.post('/items', routes.items.filter);
 app.get('/items/:id', routes.items.show);
 app.post('/items/:id', routes.items.edit);
 app.del('/items/:id', routes.items.del);
