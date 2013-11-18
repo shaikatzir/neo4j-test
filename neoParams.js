@@ -75,7 +75,19 @@ LENGTH_MAP={'SHORT':['SHORT','MINI'],'MIDI':['MIDI'],'LONG':['LONG','MAXI'],'NON
 
 NECK_MAP={'CLOSED':['BOAT-NECK','ROUND-NECK','BARDOT-NECK'],'HEART':['SIMPLE-NECK','HEART-NECK'],'V':['V-NECK'],'BUTTONED':['SHIRT-DRESS'],'GOLF':['HIGH-NECK','TURTLENECK'],'SQUARE':['SQUARE-NECK'],'COLLAR':['COLLAR'],'WRAP':['WRAP-NECK'],'WIDE':['SIMPLE-NECK','WIDE-NECK'],'FALLING':[],'NONE':[]};
 
-MISC_MAP={'TRANSPARENT':['TRANSPARENT'],'STUD':['STUD'],'POCKET':['POCKET'],'BELT':['BELT'],'PLEAT':['PLEAT'],'NONE':[]};
+MISC_MAP={'TRANSPARENT':['TRANSPARENT'],'STUD':['STUD'],'POCKET':['POCKET'],'BELT':['BELT'],'PLEAT':['PLEAT']};
+
+MISC_NO='NO_';
+
+
+container_py2js_3=MISC_MAP;
+var generator_py2js_4 = new Generator(container_py2js_3);
+for(MI=generator_py2js_4.nextValue();generator_py2js_4.hadMore();MI=generator_py2js_4.nextValue()) {
+    
+    (MISC_MAP[(MISC_NO + MI)])=[];
+}
+
+(MISC_MAP['NONE'])=[];
 
 CAT_MAP={'Color':COLORS_MAP,'Pattern':PATTERNS_MAP,'Material':MATERIALS_MAP,'Sleeve':SLEEVES_MAP,'Length':LENGTH_MAP,'Neck':NECK_MAP,'Misc':MISC_MAP};
 
@@ -91,6 +103,8 @@ exports.QUESTIONS = { "Color" : "What color is the dress?",
 					  "Misc" : "Any other properties of the dress?"}
 					  
 exports.QUESTIONS_ORDER = ["Color", "Pattern",  "Neck", "Sleeve","Material",  "Misc", "Length"] 				  
+exports.MISC_NO_PREFIX = MISC_NO
+exports.MISC_ORDER = ['TRANSPARENT','STUD','POCKET','BELT','PLEAT']
 exports.RELATIONS={"Color" : 'ITEM_COLOR', "Pattern": 'ITEM_PATTERN',  "Neck" :'ITEM_NECK' , "Sleeve" : 'ITEM_SLEEVE',"Material" : 'ITEM_MATERIAL',  "Misc" : 'ITEM_MISC', "Length" :'ITEM_LENGTH' }
  
 imgPrefix = 'http://donde-app.com:2222/0.1/API/getImg/323232/img='

@@ -1,10 +1,26 @@
 remote
 Express server listening on port 3000
-{ Neck: '',
-  Sleeve: '',
-  Length: '',
-  Material: '',
-  Misc: '',
-  Color: '',
-  Pattern: '' }
-[90mGET /items [32m200 [90m5300ms - 41.97kb[0m
+localhost
+/0.1/API/dynamicSearch/323232/name=Misc&value=NO_TRANSPARENT&node=ttgg
+/0.1/API/dynamicSearch/323232/name=Misc&value=NO_TRANSPARENT&node=ttgg
+/0.1/API/dynamicSearch/323232/name=Misc&value=NO_TRANSPARENT&node=ttgg
+GET
+parameters len is : 40
+{"name":"Misc","value":"NO_TRANSPARENT","node":"ttgg"}
+start dynamic search. name = ttgg
+ttgg
+found node
+got node id 6738
+search node id 6738
+search in : 6738
+start query on 6738
+count is 420
+q_num :  5
+count :  [ , , , 4, 0, 0 ]
+count color match :  0
+NO_TRANSPARENT
+TRANSPARENT
+0
+answer [object Object]
+ret is : {"success":true,"error":"","num":0,"profile":{"nextFeature":"Misc","values":[{"value":"STUD","img":""},{"value":"NO_STUD","img":""}],"question":"STUD","results":[{"id":"429761998","index":0},{"id":"432706088","index":0},{"id":"431452834","index":0},{"id":"378228565","index":0},{"id":"378228574","index":0},{"id":"17210","index":0},{"id":"17796","index":0},{"id":"438124708","index":0},{"id":"438353471","index":0},{"id":"425183580","index":0},{"id":"439336043","index":0},{"id":"19250","index":0},{"id":"19264","index":0},{"id":"360644179","index":3},{"id":"436046202","index":0},{"id":"436235539","index":0}]},"nextFeature":1}
+[90mGET /0.1/API/dynamicSearch/323232/name=Misc&value=NO_TRANSPARENT&node=ttgg [32m200 [90m3288ms - 1.27kb[0m

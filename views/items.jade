@@ -13,9 +13,10 @@ block content
                     for pr in cat.properties
                         option(value='#{pr}', selected=pr==defaults[cat.cat]) #{pr}
         input(type='submit', value='filter')
-                
+    form(action='', method='GET')           
+        input(type='submit', value='clear') 
     if items.length
-        p Here are the current items:
+        p #{items.length} items:
         ul.items
             for item in items
                 li.item

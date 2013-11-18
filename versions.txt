@@ -9,4 +9,11 @@ version 1.0 :
     		
     	-supply "Donde Dynamic Search" for the app.
     	
+version 1.1 :
+
+    
+    	-web service:
+    		- items webpage filter has now a clear button
+    		
+    	-"Donde Dynamic Search" now splits Misc questions to "yes/no" questions
     	
